@@ -1,0 +1,81 @@
+{% set ttc = 0 %}
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Ventes du jour{% endblock %}
+
+{% block angularJS %} ng-app {% endblock %}
+
+{% block body %}
+    <h3>Ventes du jour ({{ recherche|date("Y-m-d") }})</h3>
+    <br/><br/>
+    {% for message in app.flashes('errors') %}
+        <div class="alert alert-danger">
+                {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+    {% endfor %}
+
+    <form class="form-inline" method="get">
+        <input name="recherche" class="form-control" type="date" value="{{ recherche|date("Y-m-d") }}">
+        <button type="submit" class="btn btn-primary">Recherche</button>
+    </form>
+    <br>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Référence</th>
+                <th>Vendeur</th>
+                <th>Client</th>
+                <th>Produits</th>
+                <th>Quantité</th>
+                <th>TTC</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vente in ventes %}
+            <tr>
+                <td>{{ vente.reference }}</td>
+                <td>{{ vente.utilisateur.nomUtilisateur }}</td>
+                <td>{{ vente.produits.nomClient }}</td>
+                <td>
+                    {% for produit in vente.produits.produits %}
+                        {{ produit.designationProduit }} <br/>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for produit in vente.produits.produits %}
+                        {{ produit.quantite }} <br/>
+                    {% endfor %}
+                </td>
+                <td>
+                        {% set pa = 0 %}
+                        {% for produit in vente.produits.produits %}
+                                {% set pa = pa + produit.net %}
+                                {% set ttc = ttc + produit.net %}
+                                {{ produit.net|number_format(0, '', ' ') }} FCFA <br/>
+                        {% endfor %}
+                        <hr>
+                        {{ pa|number_format(0, '', ' ') }} FCFA
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+                <tr>
+                        <th colspan="5">Total</th>
+                        <td><strong>{{ ttc|number_format(0, '', ' ') }} FCFA</strong></td>
+                </tr>
+        </tfoot>
+    </table>
+
+
+{% endblock %}
+

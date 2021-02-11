@@ -1,0 +1,39 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Caisse index{% endblock %}
+
+{% block body %}
+    <h1>Caisse index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Motif</th>
+                <th>Entre</th>
+                <th>Sortie</th>
+                <th>Solde</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for caisse in caisses %}
+            <tr>
+                <td>{{ caisse.motif }}</td>
+                <td>{{ caisse.entre|number_format(0, '.', ' ') }}</td>
+                <td>{{ caisse.sortie|number_format(0, '.', ' ') }}</td>
+                <td>{{ caisse.solde|number_format(0, '.', ' ') }}</td>
+                <td>
+                    <a href="{{ path('caisse_show', {'id': caisse.id}) }}">show</a>
+                    <a href="{{ path('caisse_edit', {'id': caisse.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('caisse_approvisionnement') }}">Create new</a>
+{% endblock %}

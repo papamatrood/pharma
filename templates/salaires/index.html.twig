@@ -1,0 +1,50 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Liste des salaires{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Liste des salaires</h3>
+            <br/><br/>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>N°Mat</th>
+                        <th>Prénom & Nom</th>
+                        <th>Adresse</th>
+                        <th>Nationalite</th>
+                        <th>Civilite</th>
+                        <th>Fonction</th>
+                        <th>Categorie</th>
+                        <th>N°AMO</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for salaire in salaires %}
+                    <tr>
+                        <td>{{ salaire.employe.matricule }}</td>
+                        <td>{{ salaire.employe.prenom }} {{ salaire.employe.nom }}</td>
+                        <td>{{ salaire.employe.adresse }}</td>
+                        <td>{{ salaire.employe.nationalite }}</td>
+                        <td>{{ salaire.employe.civilite }}</td>
+                        <td>{{ salaire.employe.fonction }}</td>
+                        <td>{{ salaire.employe.categorie }}</td>
+                        <td>{{ salaire.employe.numeroAssuranceMaladie }}</td>
+                        {#<td>{{ salaire.employe.dateContratAt ? salaire.employe.dateContratAt|date('Y-m-d') : '' }}</td>
+                        <td>{{ salaire.employe.situationFamiliale }}</td>#}
+                        <td>
+                            <a class="btn btn-outline-primary" href="{{ path('salaire_pdf', {'id': salaire.id}) }}"><i class="fas fa-print"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="19">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

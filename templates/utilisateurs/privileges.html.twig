@@ -1,0 +1,38 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Changer de privilège{% endblock %}
+
+{% block body %}
+        <h3 class="font-italic">Changer de privilège</h3>
+        <br/><br/>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+        {% endfor %}
+
+        <form class="" method="GET" action="{{ path('privileges') }}" >
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                            <label for="utilisateur">Utilisateur</label>
+                            <select name="utilisateur" class="form-control" id="utilisateur">
+                                    {% for utilisateur in utilisateurs %}
+                                            <option value="{{ utilisateur.id }}" >{{ utilisateur.nomUtilisateur }}</option>
+                                    {% endfor %}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                            <label for="role">Rôle</label>
+                            <select name="role" class="form-control" id="role">
+                                    {% for role, key in roles %}
+                                            <option value="{{ key }}" >{{ role }}</option>
+                                    {% endfor %}
+                            </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Changer</button>
+                </div>
+            </div>
+        </form> 
+
+{% endblock %}

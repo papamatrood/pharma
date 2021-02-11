@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employes{% endblock %}
+
+{% block body %}
+    <h1>Employes</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ employe.id }}</td>
+            </tr>
+            <tr>
+                <th>Matricule</th>
+                <td>{{ employe.matricule }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ employe.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ employe.prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateNaissanceAt</th>
+                <td>{{ employe.dateNaissanceAt ? employe.dateNaissanceAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LieuNaissance</th>
+                <td>{{ employe.lieuNaissance }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ employe.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Nationalite</th>
+                <td>{{ employe.nationalite }}</td>
+            </tr>
+            <tr>
+                <th>Civilite</th>
+                <td>{{ employe.civilite }}</td>
+            </tr>
+            <tr>
+                <th>DateEmbaucheAt</th>
+                <td>{{ employe.dateEmbaucheAt ? employe.dateEmbaucheAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fonction</th>
+                <td>{{ employe.fonction }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ employe.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ employe.email }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ employe.categorie }}</td>
+            </tr>
+            <tr>
+                <th>NumeroAssuranceMaladie</th>
+                <td>{{ employe.numeroAssuranceMaladie }}</td>
+            </tr>
+            <tr>
+                <th>TypeContrat</th>
+                <td>{{ employe.typeContrat }}</td>
+            </tr>
+            <tr>
+                <th>DateContratAt</th>
+                <td>{{ employe.dateContratAt ? employe.dateContratAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>SituationFamiliale</th>
+                <td>{{ employe.situationFamiliale }}</td>
+            </tr>
+            <tr>
+                <th>NombreEnfant</th>
+                <td>{{ employe.nombreEnfant }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('employes_index') }}">back to list</a>
+
+    <a href="{{ path('employes_edit', {'id': employe.id}) }}">edit</a>
+
+    {{ include('employes/_delete_form.html.twig') }}
+{% endblock %}

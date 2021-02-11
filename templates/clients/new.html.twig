@@ -1,0 +1,54 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Ajouter un client{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4 bg-success p-3 text-white">
+            <h3>Ajouter un client</h3>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-8 bg-light p-3">
+            <h3>Liste des clients</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Numero</th>
+                        <th>Prenom</th>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Telephone</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td>{{ client.numero }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.adresse }}</td>
+                        <td>{{ client.telephone }}</td>
+                        <td>
+                            <a class="btn btn-outline-primary" href="{{ path('clients_edit', {'id': client.id}) }}"><i class="far fa-edit"></i></a>
+                            <form method="post" action="{{ path('clients_delete', {'id': client.id}) }}" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer ce client?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ client.id) }}">
+                                <button class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

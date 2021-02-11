@@ -1,0 +1,21 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Dépense{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4 bg-success p-3 text-white">
+            <h3>Dépense</h3>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary">{{ button_label|default('Enregistré') }}</button>
+                <button class="btn btn-warning" type="reset">Annulé</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <br/>
+
+    <a class="btn btn-outline-primary" href="{{ path('caisse_pdf') }}">Retour à la liste</a>
+{% endblock %}

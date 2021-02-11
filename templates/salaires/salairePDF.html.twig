@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Fiche salaire</title>
+        <link href="./css/salaire.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <table id="enTete">
+            <tr>
+                <td width="150">
+                    <img src="images/logo.jpg" alt="Logo" width="65" height="65" />
+                </td>
+                <td width="585"><h2>Fiche de paie du mois</h2></td>
+            </tr>
+        </table>
+        <br/>
+        <table class="titre_section">
+            <tr>
+                <td width="751"><h3>Détail imformation employé</h3></td>
+            </tr>
+        </table>
+        
+        <table id="total">
+            <tr >
+                <td class="titre_employe" width="110">Matricule </td>
+                <td width="150">{{ salaire.employe.matricule }}</td>
+            </tr>
+            <tr >
+                <td class="titre_employe" width="110">Prénom & Nom </td>
+                <td width="150">{{ salaire.employe.prenom }} {{ salaire.employe.nom }}</td>
+            </tr>
+            <tr >
+                <td class="titre_employe" width="110">Téléphone </td>
+                <td width="150">{{ salaire.employe.telephone }}</td>
+            </tr>
+            <tr >
+                <td class="titre_employe" width="110">Fonction </td>
+                <td width="150">{{ salaire.employe.fonction }}</td>
+            </tr>
+            <tr >
+                <td class="titre_employe" width="110">Adresse </td>
+                <td width="150">{{ salaire.employe.adresse }}</td>
+            </tr>
+            <tr >
+                <td class="titre_employe" width="110">catégorie </td>
+                <td width="150">{{ salaire.employe.categorie }}</td>
+            </tr>
+            <tr >
+                <td class="titre_employe" width="110">Type Contrat </td>
+                <td width="150">{{ salaire.employe.typeContrat }}</td>
+            </tr>
+            <tr >
+                <td class="titre_employe" width="110">Date Contrat </td>
+                <td width="150">{{ salaire.employe.dateContratAt|date('d-m-Y') }}</td>
+            </tr>
+        </table>
+        <br/>
+        <table class="titre_section">
+            <tr>
+                <td width="751"><h3>Détail imformation salaire</h3></td>
+            </tr>
+        </table>
+        
+        <table id="entity">
+            <tr>
+                <td width="150">Nombre d'heures</td>
+                <td width="250">{{ salaire.nombreHeure }}</td>
+            </tr>
+            <tr>
+                <td width="150">Taux horaires</td>
+                <td width="250">{{ salaire.tauxHoraire }}</td>
+            </tr>
+            <tr>
+                <td width="150">Primes</td>
+                <td width="250">{{ salaire.prime }}</td>
+            </tr>
+            <tr>
+                <td width="150">Avantages</td>
+                <td width="250">{{ salaire.avantage }}</td>
+            </tr>
+            <tr>
+                <td width="150">Cotisation de social</td>
+                <td width="250">{{ salaire.cotisationSocial }}</td>
+            </tr>
+            <tr>
+                <td width="150">Salaire de base</td>
+                <td width="250">{{ salaire.salaireBase }}</td>
+            </tr>
+            <tr>
+                <td width="150">Salaire brut</td>
+                <td width="250">{{ salaire.salaireBrut }}</td>
+            </tr>
+            <tr>
+                <td width="150">Salaire net</td>
+                <td width="250">{{ salaire.salaireNet }}</td>
+            </tr>
+        </table>
+        <br/>
+        <table class="signature">
+            <tr>
+                <td width="530"><h5>Signature employé</h5></td>
+                <td width="200"><h5>Signature responsable</h5></td>
+            </tr>
+        </table>
+        <div id="footer">
+            [[page_nb]]
+        </div>
+    </body>
+</html>

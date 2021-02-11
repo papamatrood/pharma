@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Liste salarie</title>
+        <link href="./css/salaire.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body class="employes">
+        <table id="enTete">
+            <tr>
+                <td width="80">
+                    <img src="images/logo.jpg" alt="Logo" width="65" height="65" />
+                </td>
+                <td width="585"><h2>Liste générale des salaries</h2></td>
+            </tr>
+        </table>
+        <br/>
+        
+        <table id="total">
+            <tr >
+                <td class="titre_employe" width="80">Matricule </td>
+                <td class="titre_employe" width="80">Prénom & Nom </td>
+                <td class="titre_employe" width="80">Téléphone </td>
+                <td class="titre_employe" width="80">Fonction </td>
+                <td class="titre_employe" width="80">Adresse </td>
+                <td class="titre_employe" width="80">catégorie </td>
+                <td class="titre_employe" width="80">Type Contrat </td>
+                <td class="titre_employe" width="80">Date Contrat </td>
+            </tr>
+            {% for employe in employes %}
+            <tr >
+                <td width="80">{{ employe.matricule }}</td>
+                <td width="80">{{ employe.prenom }} {{ employe.nom }}</td>
+                <td width="80">{{ employe.telephone }}</td>
+                <td width="80">{{ employe.fonction }}</td>
+                <td width="80">{{ employe.adresse }}</td>
+                <td width="80">{{ employe.categorie }}</td>
+                <td width="80">{{ employe.typeContrat }}</td>
+                <td width="80">{{ employe.dateContratAt|date('d-m-Y') }}</td>
+            </tr>
+            {% else %}
+                <tr>
+                    <td colspan="19">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br/>
+        <div id="footer">
+            <span class="color strong">{{ "now"|date("d/m/Y") }}</span>
+            <br />
+            [[page_nb]]
+        </div>
+    </body>
+</html>

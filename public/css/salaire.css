@@ -1,0 +1,57 @@
+.titre_section td {
+    text-align: center;
+    background-color: #0088cc;
+    color: white;
+}
+
+table#enTete {
+    width: 100%;
+}
+
+table#enTete td {
+    border:1px solid #0088cc;
+    padding: 1px;
+    text-align: center;
+}
+
+table#entity {
+    float:left;
+    margin-top:30px;
+}
+
+table#entity td {
+    height:45px;
+    border-bottom:1px solid #0088cc;
+    padding-left: 5px;
+}
+
+table#total {
+    margin-top:30px;
+}
+
+table#total, table#total td {
+    height:20px;
+    border:1px solid #0088cc;
+}
+
+table#total {
+  border-collapse: collapse;
+}
+
+table#total td.titre_employe {
+    background-color: #0088cc;
+    color: white;
+    padding: 1px;
+}
+
+table.signature {
+    border-top: 3px solid #000;
+    margin: 5px 0px;
+}
+
+#footer { 
+    position:absolute;
+    bottom:0px;width:100%;
+    text-align:center;
+    line-height:25px;
+}

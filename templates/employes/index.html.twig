@@ -1,0 +1,63 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Liste des employés{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Liste des employés</h3>
+            <br/>
+            <a class="btn btn-outline-primary float-right" href="{{ path('employes_new') }}">Ajouter un employé</a>
+            <br/><br/><br/>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>N°Mat</th>
+                        <th>Prénom & Nom</th>
+                        <th>Adresse</th>
+                        <th>Nationalite</th>
+                        <th>Civilite</th>
+                        <th>Fonction</th>
+                        <th>Tél</th>
+                        <th>Email</th>
+                        <th>Categorie</th>
+                        <th>N°AMO</th>
+                        <th>Type Cont</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for employe in employes %}
+                    <tr>
+                        <td>{{ employe.matricule }}</td>
+                        <td>{{ employe.prenom }} {{ employe.nom }}</td>
+                        <td>{{ employe.adresse }}</td>
+                        <td>{{ employe.nationalite }}</td>
+                        <td>{{ employe.civilite }}</td>
+                        <td>{{ employe.fonction }}</td>
+                        <td>{{ employe.telephone }}</td>
+                        <td>{{ employe.email }}</td>
+                        <td>{{ employe.categorie }}</td>
+                        <td>{{ employe.numeroAssuranceMaladie }}</td>
+                        <td>{{ employe.typeContrat }}</td>
+                        {#<td>{{ employe.dateContratAt ? employe.dateContratAt|date('Y-m-d') : '' }}</td>
+                        <td>{{ employe.situationFamiliale }}</td>#}
+                        <td>
+                            <a class="btn btn-outline-primary" href="{{ path('employes_edit', {'id': employe.id}) }}"><i class="far fa-edit"></i></a>
+                            <form method="post" action="{{ path('employes_delete', {'id': employe.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ employe.id) }}">
+                                <button class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="19">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

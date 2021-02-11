@@ -1,0 +1,140 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% set total = 0 %}
+
+{% block title %}Fiche individuel de salaire{% endblock %}
+{% block stylesheets %}
+        <style>
+                .form-individuel label {
+                        justify-content: left;
+                        width: 48%;
+                }
+                .form-individuel .form-control {
+                        width: 48%;
+                }
+        </style>
+{% endblock %}
+{% block angularJS %} ng-app {% endblock %}
+{% block body %}
+        <h3>Fiche individuel de salaire <span class="float-right">Mois de: {{ month }} </span></h3>
+        <br/>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in app.flashes('errors') %}
+        <div class="alert alert-danger">
+                {{ message }}
+        </div>
+        {% endfor %}
+
+        <form class="form-inline form-individuel" method="GET" action="{{ path('salaires_new') }}" >
+                <div class="border p-3 w-100">
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireMatricule">Matricule</label>
+                                        <select name="Matricule" class="form-control form-control-sm" id="salaireMatricule">
+                                                {% for employe in employes %}
+                                                        <option value="{{ employe.id }}" >{{ employe.matricule }}</option>
+                                                {% endfor %}
+                                        </select>
+                                </div>
+                        </div>
+                </div>
+                <br/>
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salairePrenomNom">Prénom & Nom</label>
+                                        <input name="prenomNom" type="text" class="form-control form-control-sm" id="salairePrenomNom">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireDateNaissance">Date Naissance</label>
+                                        <input name="naissance" type="text" class="form-control form-control-sm" id="salaireDateNaissance">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireNombreEnfant">Nombre Enfant</label>
+                                        <input name="enfants" type="text" class="form-control form-control-sm" id="salaireNombreEnfant">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireTypeContrat">Type Contrat</label>
+                                        <input name="typeContrat" type="text" class="form-control form-control-sm" id="salaireTypeContrat">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireCategorie">Catégorie</label>
+                                        <input name="categorie" type="text" class="form-control form-control-sm" id="salaireCategorie">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireCivilite">Civilité</label>
+                                        <input name="civilite" type="text" class="form-control form-control-sm" id="salaireCivilite">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireFonction">Fonction</label>
+                                        <input name="fonction" type="text" class="form-control form-control-sm" id="salaireFonction">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireDateEmbauche">Date Embauche</label>
+                                        <input name="embauche" type="text" class="form-control form-control-sm" id="salaireDateEmbauche">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireSituationFamiliale">Situation Familiale</label>
+                                        <input name="situationFamiliale" type="text" class="form-control form-control-sm" id="salaireSituationFamiliale">
+                                </div>
+                        </div>
+                </div>
+                </div>
+                <div class="border p-3 w-100">
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireNbreHeure">Nombre heure</label>
+                                        <input name="salaireNbreHeure" type="text" class="form-control form-control-sm" id="salaireNbreHeure">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireBase">Salaire de base</label>
+                                        <input name="salaireBase" ng-model="salaireBase" type="text" class="form-control form-control-sm" id="salaireBase">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireAvantages">Avantages</label>
+                                        <input name="salaireAvantages" ng-model="salaireAvantages" type="text" class="form-control form-control-sm" id="salaireAvantages">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireTauxHoraire">Taux horaire</label>
+                                        <input name="salaireTauxHoraire" type="text" class="form-control form-control-sm" id="salaireTauxHoraire">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salairePrimes">Primes</label>
+                                        <input name="salairePrimes" ng-model="salairePrimes" type="text" class="form-control form-control-sm" id="salairePrimes">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireBrut">Salaire brut</label>
+                                        <input name="salaireBrut" type="text" class="form-control form-control-sm" value="{{ '{{1* salaireBase + salaireAvantages * 1 + salairePrimes * 1}}' }}" id="salaireBrut">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireCotisation">Cotisation sociale (5%)</label>
+                                        <input name="salaireCotisation" type="text" value="{{ '{{((1* salaireBase + salaireAvantages * 1 + salairePrimes * 1) * 5 ) / 100}}' }}" class="form-control form-control-sm" id="salaireCotisation">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="salaireNet">Salaire net</label>
+                                        <input name="salaireNet" type="text" value="{{ '{{(1* salaireBase + salaireAvantages * 1 + salairePrimes * 1) - ((1* salaireBase + salaireAvantages * 1 + salairePrimes * 1) * 5 ) / 100}}' }}" class="form-control form-control-sm" id="salaireNet">
+                                </div>
+                        </div>
+                </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Valider</button>
+        </form> 
+{% endblock %}
+
+{% block javascripts %}
+        <script  src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js" ></script>
+{% endblock %}

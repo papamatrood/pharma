@@ -1,0 +1,61 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Ajouter un employé{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1>Assignation de rôle</h1>      
+        <p>Remplisser le formulaire pour assister un rôle à l'employé <strong>{{ employe.prenom }} {{ employe.nom }}</strong></p>
+        {% if errors is not empty %}
+        <div class="alert alert-danger">
+                Veuillez remplir tous les champs correctement.
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{{ path('add_utilisateur', {id: employe.id}) }}" method="POST" oninput='confirmpassword.setCustomValidity(confirmpassword.value != password.value ? "Les mots de passe ne correspondent pas." : "")'>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="username">Nom d'utilisateur</label>
+                            <input name="username" type="text" class="form-control {% if errors.username is defined %} is-invalid {% endif %} " id="username" placeholder="Nom d'utilisateur" required >
+                            {% if errors.username is defined %}
+                            <div class="invalid-feedback">{{ errors.username }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="role">Rôle</label>
+                            <select class="form-control" name="role" id="role">
+                            {% for key, value in roles %}
+                                <option value="{{ value }}" >{{ key }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input name="password" type="password" class="form-control {% if errors.password is defined %} is-invalid {% endif %} " id="password" placeholder="Mot de passe" required >
+                            {% if errors.password is defined %}
+                            <div class="invalid-feedback">{{ errors.password }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="confirmpassword">Confirmation de mot de passe</label>
+                            <input name="confirmpassword" type="password" class="form-control {% if errors.confirmpassword is defined %} is-invalid {% endif %} " id="confirmpassword" placeholder="Confirmation de mot de passe" required >
+                            {% if errors.confirmpassword is defined %}
+                            <div class="invalid-feedback">{{ errors.confirmpassword }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Assigner</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

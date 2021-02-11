@@ -1,0 +1,164 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}vente fournisseur{% endblock %}
+
+{% block angularJS %} ng-app {% endblock %}
+
+{% block body %}
+        <h3 class="font-italic">N°Pièce <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
+        <br/><br/>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+        {% endfor %}
+
+        <form class="" method="GET" action="{{ path('ventes_new') }}" >
+                <div class="row">
+                        <div class="col-md-2">
+                                <div class="form-group">
+                                        <label for="codeProd">Code produit</label>
+                                        <select name="produit" class="form-control" id="codeProd">
+                                                {% for p in produits %}
+                                                        <option value="{{ p.id }}" >{{ p.code }}</option>
+                                                {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="code" id="code" />
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="designation">Désignation</label>
+                                        <input name="designation" type="text" class="form-control" id="designation">
+                                </div>
+                        </div>
+                        <div class="col-md-2">
+                                <div class="form-group">
+                                        <label for="pu">PU</label>
+                                        <input name="pu" type="text" ng-model="pu" class="form-control" id="pu">
+                                </div>
+                        </div>
+                        <div class="col-md-2">
+                                <div class="form-group">
+                                        <label for="quantite">Quantité</label>
+                                        <input name="quantite" ng-model="quantite" type="number" class="form-control" id="quantite">
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="brut">Montant Brut</label>
+                                        <input name="brut" type="text" class="form-control" value="{{ '{{1 * quantite * pu}}' }}" id="brut">
+                                </div>
+                        </div>
+                </div>
+                <div class="row">
+                        <div class="col-md-2">
+                                <div class="form-group">
+                                        <label for="emballage">Emballage</label>
+                                        <select name="emballage" class="form-control" id="emballage">
+                                                <option value="Boîte" >Boîte</option>
+                                                <option value="Plaquette" >Plaquette</option>
+                                        </select>
+                                </div>
+                        </div>
+                        <div class="col-md-2">
+                                <div class="form-group">
+                                        <label for="remise">Remise</label>
+                                        <input name="remise" ng-model="remise" type="number" class="form-control" id="remise">
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="net">Montant Net</label>
+                                        <input name="net" type="number" value="{{ '{{(1 * quantite * pu) - remise}}' }}" class="form-control" id="net">
+                                </div>
+                        </div>
+                <button type="submit" class="btn btn-success ml-3">Valider</button>
+                </div>
+        </form> 
+
+        <hr/>
+
+        <form action="{{ path('ventes_validation', {reference: reference}) }}" method="GET">
+                <table class="table table-bordered">
+                        <thead class="thead-light">
+                        <tr>
+                                <th>Code produit</th>
+                                <th>Désignation</th>
+                                <th>PUV</th>
+                                <th>Quantité</th>
+                                <th>Montant brut</th>
+                                <th>Emballage</th>
+                                <th>Remise</th>
+                                <th>Montant net</th>
+                                <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for vente in ventes.produits %}
+                        <tr>
+                                <td>{{ vente.codeProduit }}</td>
+                                <td>{{ vente.designationProduit }}</td>
+                                <td>{{ vente.prix }}</td>
+                                <td>{{ vente.quantite }}</td>
+                                <td>{{ vente.brut }}</td>
+                                <td>{{ vente.emballage }}</td>
+                                <td>{{ vente.remise }}</td>
+                                <td>{{ vente.net }}</td>
+                                <td>
+                                    <a class="btn btn-outline-danger" href="{{ path('produit_vente_delete', {'id': vente.idProduit}) }}">
+                                            <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                                <td colspan="9">Aucun enregistrement trouvé</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+                <div class="border p-3 w-100">
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="client">Code Client</label>
+                                        <select name="client" class="form-control form-control-sm" id="client">
+                                                {% for client in clients %}
+                                                        <option value="{{ client.id }}" >{{ client.numero }}</option>
+                                                {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="numero" id="numero" />
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="dateVente">Date vente</label>
+                                        <input name="dateVente" type="text" class="form-control form-control-sm" value="{{ "now"|date("m/d/Y") }}" id="dateVente">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="prenomNom">Prénom & Nom</label>
+                                        <input name="prenomNom" type="text" class="form-control form-control-sm" id="prenomNom">
+                                </div>
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="adresse">Adresse</label>
+                                        <input name="adresse" type="text" class="form-control form-control-sm" id="adresse">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label  class="mr-sm-2" for="telephone">Téléphone</label>
+                                        <input name="telephone" type="text" class="form-control form-control-sm" id="telephone">
+                                </div>
+                        </div>
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Vendre</button>
+        </form>
+
+{% endblock %}
+
+{% block javascripts %}
+        <script  src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js" ></script>
+{% endblock %}
+

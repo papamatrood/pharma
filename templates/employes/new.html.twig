@@ -1,0 +1,39 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Ajouter un employé{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        <h3>Ajouter un employé</h3>
+        <div class="row">
+            <div class="col-md-4">
+                    {{ form_row(form.matricule) }}
+                    {{ form_row(form.nom) }}
+                    {{ form_row(form.prenom) }}
+                    {{ form_row(form.dateNaissanceAt) }}
+                    {{ form_row(form.lieuNaissance) }}
+                    {{ form_row(form.adresse) }}
+            </div>
+            <div class="col-md-4">
+                    {{ form_row(form.nationalite) }}
+                    {{ form_row(form.civilite) }}
+                    {{ form_row(form.dateEmbaucheAt) }}
+                    {{ form_row(form.fonction) }}
+                    {{ form_row(form.telephone) }}
+                    {{ form_row(form.email) }}
+            </div>
+            <div class="col-md-4">
+                    {{ form_row(form.categorie) }}
+                    {{ form_row(form.numeroAssuranceMaladie) }}
+                    {{ form_row(form.typeContrat) }}
+                    {{ form_row(form.dateContratAt) }}
+                    {{ form_row(form.situationFamiliale) }}
+                    {{ form_row(form.nombreEnfant) }}
+            </div>
+        </div>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+
+    <br/>
+    <a class="btn btn-outline-primary" href="{{ path('employes_index') }}">Retour à la liste</a>
+{% endblock %}

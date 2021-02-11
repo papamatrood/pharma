@@ -1,0 +1,104 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Commande fournisseur{% endblock %}
+
+{% block body %}
+        <h3 class="font-italic">BON DE COMMANDE N° <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
+        <br/><br/>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+        {% endfor %}
+
+        <form class="" method="GET" action="{{ path('commandes_edit', {'idCommande': idCommande}) }}" >
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="codeProd">Code produit</label>
+                                        <select name="produit" class="form-control" id="codeProd">
+                                                {% for p in produits %}
+                                                        <option value="{{ p.id }}" >{{ p.code }}</option>
+                                                {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="code" id="code" />
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="designation">Désignation</label>
+                                        <input name="designation" type="text" class="form-control" id="designation">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="commandeProduitQte">Quantité</label>
+                                        <input name="quantite" type="number" class="form-control" id="commandeProduitQte">
+                                </div>
+                        </div>
+                <button type="submit" class="btn btn-success ml-3">Valider</button>
+                </div>
+        </form> 
+
+        <hr/>
+
+        <form action="{{ path('commande_edit_validation', {'reference': reference, 'idCommande': idCommande}) }}" method="GET">
+                <table class="table table-bordered">
+                        <thead class="thead-light">
+                        <tr>
+                                <th>Code produit</th>
+                                <th>Désignation</th>
+                                <th>Quantité</th>
+                                <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for commande in commandes.produits %}
+                        <tr>
+                                <td>{{ commande.codeProduit }}</td>
+                                <td>{{ commande.designationProduit }}</td>
+                                <td>
+                                        {{ commande.quantite }}
+                                </td>
+                                <td>
+                                        <a class="btn btn-outline-danger" href="{{ path('produit_commande_edit_delete', {'id': commande.idProduit, 'idCommande': idCommande}) }}">
+                                                <i class="far fa-trash-alt"></i>
+                                        </a>
+                                </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                                <td colspan="7">Aucun enregistrement trouvé</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="nFour">N°Four</label>
+                                        <select name="fournisseur" class="form-control" id="nFour">
+                                                {% for f in fournisseurs %}
+                                                        <option value="{{ f.id }}" >{{ f.numero }}</option>
+                                                {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="numero" id="numero" />
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="fournisseur">Fournisseur</label>
+                                        <input name="nomFournisseur" type="text" class="form-control" id="fournisseur">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="dateCommande">Date commande</label>
+                                        <input name="dateCommande" type="date" value="{{ "now"|date("Y-m-d") }}" class="form-control" id="dateCommande">
+                                </div>
+                        </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Commander</button>
+        </form>
+
+{% endblock %}

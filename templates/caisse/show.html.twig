@@ -1,0 +1,38 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Caisse{% endblock %}
+
+{% block body %}
+    <h1>Caisse</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ caisse.id }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ caisse.motif }}</td>
+            </tr>
+            <tr>
+                <th>Entre</th>
+                <td>{{ caisse.entre }}</td>
+            </tr>
+            <tr>
+                <th>Sortie</th>
+                <td>{{ caisse.sortie }}</td>
+            </tr>
+            <tr>
+                <th>Solde</th>
+                <td>{{ caisse.solde }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('caisse_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('caisse_edit', {'id': caisse.id}) }}">edit</a>
+
+    {{ include('caisse/_delete_form.html.twig') }}
+{% endblock %}

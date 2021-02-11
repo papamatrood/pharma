@@ -1,0 +1,148 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% set total = 0 %}
+
+{% block title %}Livraison{% endblock %}
+
+{% block body %}
+        <h3 class="font-italic">BON DE LIVRAISON N° <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
+        <br/><br/>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in app.flashes('errors') %}
+        <div class="alert alert-danger">
+                {{ message }}
+        </div>
+        {% endfor %}
+
+        <form class="" method="GET" action="{{ path('livraison', {id: livraisons.id}) }}" >
+                <div class="row">
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="codeProd">Code produit</label>
+                                        <select name="produit" class="form-control" id="codeProd">
+                                                {% for p in produits %}
+                                                        <option value="{{ p.id }}" >{{ p.code }}</option>
+                                                {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="code" id="code" />
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="designation">Désignation</label>
+                                        <input name="designation" type="text" class="form-control" id="designation">
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="commandeProduitQte">Quantité</label>
+                                        <input name="quantite" type="number" class="form-control" id="commandeProduitQte">
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="produitPu">Prix unitaire</label>
+                                        <input name="prix" type="text" class="form-control" required="required" id="produitPu">
+                                </div>
+                        </div>
+                <button type="submit" class="btn btn-success ml-3">Valider</button>
+                </div>
+        </form> 
+
+        <hr/>
+
+        <form action="{{ path('livraison_validation', {id: livraisons.id}) }}" method="GET">
+                <table class="table table-bordered">
+                        <thead class="thead-light">
+                        <tr>
+                                <th>Code produit</th>
+                                <th>Désignation</th>
+                                <th>Quantité</th>
+                                <th>Prix unitaire</th>
+                                <th>Montant</th>
+                                <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for livraison in livraisons.produits %}
+                        {% set montant = 0 %}
+                        <tr>
+                                <td>{{ livraison.codeProduit }}</td>
+                                <td>{{ livraison.designationProduit }}</td>
+                                <td>
+                                        {{ livraison.quantite|number_format(0, '.', ' ') }}
+                                </td>
+                                <td>
+                                        {% if livraison.prix is defined %}
+                                                {{ livraison.prix|number_format(0, '.', ' ') }} FCFA
+                                        {% else %}
+                                                <span class="text-danger">Veuillez donner un prix</span>
+                                        {% endif %}
+                                </td>
+                                <td>
+                                        {% if livraison.prix is defined %}
+                                        {% set montant = livraison.prix * livraison.quantite %}
+                                                {{ montant|number_format(0, '.', ' ') }} FCFA
+                                        {% else %}
+                                                <span class="text-danger">... FCFA</span>
+                                        {% endif %}
+                                </td>
+                                <td>
+                                        <a class="btn btn-outline-danger" href="{{ path('produit_livraison_delete', {'id': livraison.idProduit, idL:livraisons.id }) }}">
+                                                <i class="far fa-trash-alt"></i>
+                                        </a>
+                                </td>
+                        </tr>
+                                        {% if livraison.prix is defined %}
+                                                {% set total = total + (livraison.prix * livraison.quantite) %}
+                                        {% endif %}
+                                        
+                        {% else %}
+                        <tr>
+                                <td colspan="7">Aucun enregistrement trouvé</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+                {% if livraisons.produits|length != 0 %}
+                        <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item font-weight-bold">Total :</li>
+                                <li class="list-group-item">{{ total|number_format(0, '.', ' ') }} FCFA</li>
+                        </ul> 
+                    <hr/>
+                {% endif %}
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="nFour">N°Four</label>
+                                        <select name="fournisseur" class="form-control" id="nFour">
+                                                {% for f in fournisseurs %}
+                                                        <option value="{{ f.id }}" {% if f.id == livraisons.idFournisseur %} selected="selected" {% endif %} >
+                                                                {{ f.numero }}
+                                                        </option>
+                                                {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="numero" id="numero" />
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="fournisseur">Fournisseur</label>
+                                        <input name="nomFournisseur" type="text" class="form-control" id="fournisseur">
+                                </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                        <label for="dateCommande">Date livraison</label>
+                                        <input name="dateCommande" type="date" value="{{ "now"|date("Y-m-d") }}" class="form-control" id="dateCommande">
+                                </div>
+                        </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Livrer</button>
+        </form>
+
+{% endblock %}

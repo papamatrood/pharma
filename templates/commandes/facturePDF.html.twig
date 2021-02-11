@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Facture</title>
+        <link href="./css/facture.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <table id="enTete">
+            <tr>
+                <td width="78">
+                    <img src="images/logo.jpg" alt="Logo" width="65" height="65" />
+                </td>
+                <td width="585">
+                    <h2>BON DE COMMANDE N° <span class="badge badge-pill badge-success">{{ facture.reference }}</span></h2>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        
+        <table id="total">
+            <tr >
+                <td width="100"><strong>N°Fournisseur </strong></td>
+                <td width="50">{{ facture.produits.numeroFournisseur }}</td>
+                <td width="85"><strong>Fournisseur </strong></td>
+                <td width="200">{{ facture.produits.nomFournisseur }}</td>
+            </tr>
+        </table>
+        <table id="entity">
+            <tr>
+                <td width="150">CODE PRODUIT</td>
+                <td width="250">DESIGNATION</td>
+                <td width="125">QUANTITE</td>
+            </tr>
+            {% for produit in facture.produits.produits %}
+                <tr>
+                    <td class="color">{{ produit.codeProduit }}</td>
+                    <td class="color">{{ produit.designationProduit }}</td>
+                    <td class="color">{{ produit.quantite }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div id="footer">
+            <span class="color strong">{{ facture.dateCommandeAt|date('d-m-Y') }}</span>
+            <br />
+            [[page_nb]]
+        </div>
+    </body>
+</html>

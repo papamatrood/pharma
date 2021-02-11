@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Liste salarie</title>
+        <link href="./css/salaire.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body class="employes">
+        <table id="enTete">
+            <tr>
+                <td width="78">
+                    <img src="images/logo.jpg" alt="Logo" width="65" height="65" />
+                </td>
+                <td width="585">
+                    <h2>Situation de la caisse</h2>
+                    <p>À la date du {{ "now"|date("d/m/Y") }}</p>
+                    </td>
+            </tr>
+        </table>
+        <br/>
+        
+        <table id="total">
+            <tr >
+                <td class="titre_employe" width="150">Motif </td>
+                <td class="titre_employe" width="150">Entrée </td>
+                <td class="titre_employe" width="150">Sortie </td>
+                <td class="titre_employe" width="150">Solde </td>
+            </tr>
+            {% for caisse in caisses %}
+            <tr >
+                <td width="150">{{ caisse.motif }}</td>
+                <td width="150">{{ caisse.entre|number_format(0, '.', ' ') }} FCFA</td>
+                <td width="150">{{ caisse.sortie|number_format(0, '.', ' ') }} FCFA</td>
+                <td width="150">{{ caisse.solde|number_format(0, '.', ' ') }} FCFA</td>
+            </tr>
+            {% else %}
+                <tr>
+                    <td colspan="19">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br/>
+        <div id="footer">
+            <span class="color strong">{{ "now"|date("d/m/Y") }}</span>
+            <br />
+            [[page_nb]]
+        </div>
+    </body>
+</html>
