@@ -3,7 +3,7 @@
 {% block title %}Commande fournisseur{% endblock %}
 
 {% block body %}
-        <h3 class="font-italic">BON DE COMMANDE N° <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
+        <h3 class="font-italic">BON DE  N° <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
         <br/><br/>
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">
