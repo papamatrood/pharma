@@ -152,7 +152,6 @@ class CommandesController extends AbstractController
         if (array_key_exists($id, $commande['produits'])) {
             unset($commande['produits'][$id]);
             $session->set('commande', $commande);
-            $this->addFlash('success', 'Article supprimé avec succès !');
         }
 
         $response = new JsonResponse();

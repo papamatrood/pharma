@@ -106,7 +106,8 @@ $('document').ready(function () {
             $.get($(this).attr('href'), function() {
             })
             .done(function() {
-                $that.parent().parent().fadeOut();
+                $that.parent().parent().fadeOut('slow');
+                $('.alert-success').show("slow").delay(2000).fadeOut("slow");
             })
             .fail(function() {
                 $that.append("<i class=\"far fa-trash-alt\"></i>")
