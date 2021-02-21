@@ -7,7 +7,7 @@
         <br/><br/>
         <div class="alert alert-success" style="display: none;">Suppression effectuée avec succès !</div>
 
-        <form class="" method="GET" action="{{ path('commandes_new') }}" >
+        <form class="commandeFormulaire" method="GET" action="{{ path('commandes_new') }}" >
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -39,7 +39,7 @@
         <hr/>
 
         <form action="{{ path('commande_validation', {reference: reference}) }}" method="GET">
-                <table class="table table-bordered">
+                <table class="table table-bordered listeDesProduitsACommander">
                         <thead class="thead-light">
                         <tr>
                                 <th>Code produit</th>
@@ -63,7 +63,7 @@
                             </td>
                         </tr>
                         {% else %}
-                        <tr>
+                        <tr class="pasDenregistrement">
                                 <td colspan="7">Aucun enregistrement trouvé</td>
                         </tr>
                         {% endfor %}

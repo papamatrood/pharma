@@ -35,6 +35,7 @@ class CommandesController extends AbstractController
      */
     public function new(Request $request): Response
     {
+
         $entityManager = $this->getDoctrine()->getManager();
         $fournisseurs  = $entityManager->getRepository(Fournisseurs::class)->findAll();
         $produits      = $entityManager->getRepository(Produits::class)->findAllDisponible();
@@ -50,6 +51,39 @@ class CommandesController extends AbstractController
 
         $commande = $session->get('commande');
         if (count($commande) == 0) $commande['produits'] = [];
+        if ($request->isXmlHttpRequest() && ($request->query->all()['produit'] != null)) {
+            $id = (int) $request->query->all()['produit'];
+            if (array_key_exists($id, $commande)) {
+                if ($request->query->all()['quantite'] != null) {
+                    $commande['produits'][$id]['quantite'] = (int) $request->query->all()['quantite'];
+
+                    $this->addFlash('success', 'Quantité modifié avec succès !');
+                }
+            } else {
+                $commande['produits'][$id] = [];
+
+                if ($request->query->all()['quantite'] != null) {
+                    $commande['produits'][$id]['quantite'] = (int) $request->query->all()['quantite'];
+                } else {
+
+                    $commande['produits'][$id]['quantite'] = 1;
+
+                    $this->addFlash('success', 'Article ajouté avec succès !');
+                }
+                $commande['produits'][$id]['idProduit'] = (int) $request->query->all()['produit'];
+                $commande['produits'][$id]['codeProduit'] = $request->query->all()['code'];
+                $commande['produits'][$id]['designationProduit'] = $request->query->all()['designation'];
+            }
+
+            $session->set('commande', $commande);
+
+            return (new JsonResponse())->setData([
+                'code' => $request->query->all()['code'],
+                'designation' => $request->query->all()['designation'],
+                'quantite' => $request->query->all()['quantite']
+            ]);
+        }
+        
         if ($request->isMethod('GET') && ($request->query->get('produit') != null)) {
             $id = (int) $request->query->get('produit');
             if (array_key_exists($id, $commande)) {
@@ -75,9 +109,10 @@ class CommandesController extends AbstractController
             }
             
             $session->set('commande', $commande);
-
             return $this->redirectToRoute('commandes_new');
-        }
+
+        
+        } 
         return $this->render('commandes/new.html.twig', [
             'fournisseurs' => $fournisseurs,
             'produits' => $produits,

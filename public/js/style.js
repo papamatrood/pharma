@@ -99,21 +99,56 @@ $('document').ready(function () {
 
 
     //Suppression d'un produit dans la liste des produits à commander
-    $('.suppProduitCommande').click(function (event) {
-            event.preventDefault();
-            let $that = $(this);
-            $that.text('Suppression en cours ...')
-            $.get($(this).attr('href'), function() {
-            })
-            .done(function() {
+    $('.commandeFormulaire').submit(function (event) {
+        event.preventDefault();
+        let $form = $(this);
+        $form.find('button').text('Chargement...');
+        $.get($form.attr('action'), $form.serializeArray())
+            .done(function (data) {
+                let $id = $('#codeProd').val();
+                let $href = "http://127.0.0.1:8000/admin/commandes/supprimer/" + $id;
+                let $a = ('<a class="btn btn-outline-danger suppProduitCommande" href="' + $href + '">' +
+                    'Supprimer' +
+                    '</a >')
+                let $row = ('<tr>' +
+                    '<td>' + data.code + '</td>' +
+                    '<td>' + data.designation + '</td>' +
+                    '<td>' + data.quantite + '</td>' +
+                    '<td>' + $a + '</td>' +
+                    '</tr>');
+                $('.pasDenregistrement').hide().fadeOut('slow');
+                $('table.listeDesProduitsACommander tbody').append($row).hide().fadeIn('slow');
+                $('.suppProduitCommande').html('<i class="far fa-trash-alt"></i>');
+        })
+        .fail(function() {
+            alert("Echec !");
+        })
+        .always(function() {
+            $form.find('button').text('Valider');
+        });
+    });
+
+
+    //Suppression d'un produit dans la liste des produits à commander
+    $(document).on('click', '.suppProduitCommande', function (event) {
+        event.preventDefault();
+        let $that = $(this);
+        $that.text('Suppression en cours ...')
+        $.get($(this).attr('href'), function () {
+        })
+            .done(function () {
                 $that.parent().parent().fadeOut('slow');
+
                 $('.alert-success').show("slow").delay(2000).fadeOut("slow");
             })
-            .fail(function() {
+            .fail(function () {
                 $that.append("<i class=\"far fa-trash-alt\"></i>")
             })
-            .always(function() {
-                
+            .always(function () {
+                $(function () {
+                    let $tds = document.querySelectorAll('.suppProduitCommande');
+                    alert($tds.length)
+                }).change();
             });
     });
 
