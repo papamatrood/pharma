@@ -16,7 +16,7 @@ $('document').ready(function () {
         $('select.codeFamille option:selected').each(function(){
             id += $(this).val();
 
-            $.get('http://127.0.0.1:8000/user/familles/' + id, { id: id }, function (data) {
+            $.get('http://localhost:8000/user/familles/' + id, { id: id }, function (data) {
                 $('.nomFamille').val(data.famille); 
             }, "json");
 
@@ -31,13 +31,21 @@ $('document').ready(function () {
             id += $(this).val();
             numero += $(this).text();
 
-            $.get('http://127.0.0.1:8000/user/fournisseurs/' + id, function (data) {
-                $('#fournisseur').val(data.fournisseur);
-                $('#numero').val(data.numero);
-            }, "json");
+            var jqxhr = $.get('http://localhost:8000/user/fournisseurs/' + id, function () {
+            })
+                .done(function (data) {
+                    $('#fournisseur').val(data.fournisseur);
+                    $('#numero').val(data.numero);
+                })
+                .fail(function () {
+                    alert("error");
+                })
+                .always(function () {
+                });
 
         });
     }).change();
+    
 
 
     //Remplissage du champ désignation par séléction de code (Page commande)
@@ -48,11 +56,18 @@ $('document').ready(function () {
             id += $(this).val();
             code += $(this).text();
 
-            $.get('http://127.0.0.1:8000/user/produits/' + id, function (data) {
-                $('#designation').val(data.designation);
-                $('#code').val(data.code);
-                $('#pu').val(data.pu);
-            }, "json");
+            var jqxhr = $.get('http://localhost:8000/user/produits/' + id, function () {
+            })
+                .done(function (data) {
+                    $('#designation').val(data.designation);
+                    $('#code').val(data.code);
+                    $('#pu').val(data.pu);
+                })
+                .fail(function () {
+                    alert("error");
+                })
+                .always(function () {
+                });
 
         });
     }).change();
@@ -64,7 +79,7 @@ $('document').ready(function () {
         $('#salaireMatricule option:selected').each(function () {
             id += $(this).val();
 
-            $.get('http://127.0.0.1:8000/admin/employes/' + id, function (data) {
+            $.get('http://localhost:8000/admin/employes/' + id, function (data) {
                 $('#salairePrenomNom').val(data.employe);
                 $('#salaireDateNaissance').val(data.naissance);
                 $('#salaireNombreEnfant').val(data.enfants);
@@ -87,7 +102,7 @@ $('document').ready(function () {
             id += $(this).val();
             numero += $(this).text();
 
-            $.get('http://127.0.0.1:8000/user/clients/' + id, function (data) {
+            $.get('http://localhost:8000/user/clients/' + id, function (data) {
                 $('#numero').val(data.numero);
                 $('#prenomNom').val(data.prenomNom);
                 $('#adresse').val(data.adresse);
@@ -98,7 +113,7 @@ $('document').ready(function () {
     }).change();
 
 
-    //Suppression d'un produit dans la liste des produits à commander
+    //Ajout d'un produit dans la liste des produits à commander
     $('.commandeFormulaire').submit(function (event) {
         event.preventDefault();
         let $form = $(this);
@@ -106,7 +121,7 @@ $('document').ready(function () {
         $.get($form.attr('action'), $form.serializeArray())
             .done(function (data) {
                 let $id = $('#codeProd').val();
-                let $href = "http://127.0.0.1:8000/admin/commandes/supprimer/" + $id;
+                let $href = "http://localhost:8000/admin/commandes/supprimer/" + $id;
                 let $a = ('<a class="btn btn-outline-danger suppProduitCommande" href="' + $href + '">' +
                     'Supprimer' +
                     '</a >')

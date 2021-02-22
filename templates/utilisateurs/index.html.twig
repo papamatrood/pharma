@@ -3,49 +3,45 @@
 {% block title %}Liste des employés{% endblock %}
 
 {% block body %}
-    <div class="jumbotron">
-        <h1>Liste des utilisateurs</h1>      
-        <p>
-            Ceci est la liste de tous les employés. Vous pouvez ici, leurs attribués des droits d'utilisations de l'application 
-            ou modifier des mots de passe
-        </p>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th>N°Mat</th>
-                        <th>Prénom & Nom</th>
-                        <th>Email</th>
-                        <th>Categorie</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for employe in employes %}
-                    <tr>
-                        <td>{{ employe.matricule }}</td>
-                        <td>{{ employe.prenom }} {{ employe.nom }}</td>
-                        <td>{{ employe.email }}</td>
-                        <td>{{ employe.categorie }}</td>
-                        {#<td>{{ employe.dateContratAt ? employe.dateContratAt|date('Y-m-d') : '' }}</td>
-                        <td>{{ employe.situationFamiliale }}</td>#}
-                        <td>
-                        {% if employe.utilisateur is null %}
-                            <a href="{{ path('add_utilisateur', {'id': employe.id}) }}" class="btn btn-primary">Assigner un rôle</a>
-                        {% else %}
-                            <a class="btn btn-secondary" href="{{ path('edit_password', {'id': employe.id}) }}">Modifier le mot de passe</a>
-                        {% endif %}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="19">Aucun enregistrement trouvé</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <div class="containerBackground">
+        <h1 class="h3 mb-5 font-weight-normal">Liste des utilisateurs</h1> 
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>N°Mat</th>
+                            <th>Prénom & Nom</th>
+                            <th>Email</th>
+                            <th>Categorie</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for employe in employes %}
+                        <tr>
+                            <td>{{ employe.matricule }}</td>
+                            <td>{{ employe.prenom }} {{ employe.nom }}</td>
+                            <td>{{ employe.email }}</td>
+                            <td>{{ employe.categorie }}</td>
+                            {#<td>{{ employe.dateContratAt ? employe.dateContratAt|date('Y-m-d') : '' }}</td>
+                            <td>{{ employe.situationFamiliale }}</td>#}
+                            <td>
+                            {% if employe.utilisateur is null %}
+                                <a href="{{ path('add_utilisateur', {'id': employe.id}) }}" class="btn btn-primary">Assigner un rôle</a>
+                            {% else %}
+                                <a class="btn btn-secondary" href="{{ path('edit_password', {'id': employe.id}) }}">Modifier le mot de passe</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="19">Aucun enregistrement trouvé</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

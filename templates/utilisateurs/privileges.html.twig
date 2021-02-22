@@ -3,6 +3,7 @@
 {% block title %}Changer de privilège{% endblock %}
 
 {% block body %}
+    <div class="containerBackground">
         <h3 class="font-italic">Changer de privilège</h3>
         <br/><br/>
         {% for message in app.flashes('success') %}
@@ -34,5 +35,6 @@
                 </div>
             </div>
         </form> 
+    <div class="containerBackground">
 
 {% endblock %}

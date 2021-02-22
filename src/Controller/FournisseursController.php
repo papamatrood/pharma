@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -19,13 +18,11 @@ class FournisseursController extends AbstractController
 {
 
     protected $repository;
-    public $request;
     protected $allFournisseur;
 
-    public function __construct(FournisseursRepository $repository, RequestStack $request)
+    public function __construct(FournisseursRepository $repository)
     {
         $this->repository = $repository;
-        $this->request = $request;
     }
 
     /**
@@ -41,11 +38,11 @@ class FournisseursController extends AbstractController
     /**
      * @Route("/new", name="fournisseurs_new", methods={"GET","POST"})
      */
-    public function new(): Response
+    public function new(Request $request): Response
     {
         $fournisseur = new Fournisseurs();
         $form = $this->createForm(FournisseursType::class, $fournisseur);
-        $form->handleRequest($this->request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -84,10 +81,10 @@ class FournisseursController extends AbstractController
     /**
      * @Route("/{id}/edit", name="fournisseurs_edit", methods={"GET","POST"})
      */
-    public function edit(Fournisseurs $fournisseur): Response
+    public function edit(Fournisseurs $fournisseur, Request $request): Response
     {
         $form = $this->createForm(FournisseursType::class, $fournisseur);
-        $form->handleRequest($this->request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -104,9 +101,9 @@ class FournisseursController extends AbstractController
     /**
      * @Route("/{id}/delete", name="fournisseurs_delete", methods={"DELETE"})
      */
-    public function delete(Fournisseurs $fournisseur): Response
+    public function delete(Fournisseurs $fournisseur, Request $request): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$fournisseur->getId(), $this->request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$fournisseur->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($fournisseur);
             $entityManager->flush();

@@ -4,16 +4,16 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-4 bg-success p-3 text-white">
+        <div class="col-md-4 bg-white p-3">
             <h3>Modifier le fournisseur</h3>
 
             {{ form_start(form) }}
                 {{ form_widget(form) }}
                 <button class="btn btn-primary">{{ button_label|default('Mettre à jour') }}</button>
             {{ form_end(form) }}
+
+            <br/>
+            <a class="btn btn-outline-primary" href="{{ path('fournisseurs_index') }}">Retour à la liste</a>
         </div>
     </div>
-
-    <br/>
-    <a class="btn btn-outline-primary" href="{{ path('fournisseurs_index') }}">Retour à la liste</a>
 {% endblock %}

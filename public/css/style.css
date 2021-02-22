@@ -41,3 +41,18 @@
     margin-bottom: 0;
     width: 48%;
 }
+
+/* Login form */
+
+.loginForm {
+    background-color: #fff;
+    width: 37%;
+    padding: 3rem;
+}
+
+/*Background and padding for container*/
+
+.containerBackground {
+    background-color: #fff;
+    padding: 3rem;
+}

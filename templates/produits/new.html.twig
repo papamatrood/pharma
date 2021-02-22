@@ -3,47 +3,49 @@
 {% block title %}Ajouter un produit{% endblock %}
 
 {% block body %}
-    <h3>Ajouter un produit</h3>
-    {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-4">
-                    {{ form_row(form.code) }}
-            </div>
-            <div class="col-md-4">
-                    {{ form_row(form.designation) }}
-            </div>
-            <div class="col-md-4">
-                    {{ form_row(form.prixUnitaire) }}
-            </div>
-            <div class="col-md-4">
-                    {{ form_row(form.datePeremptionAt) }}
-            </div>
-            <div class="col-md-4">
-                    {{ form_row(form.nomFabricant) }}
-            </div>
-            <div class="col-md-4">
-                    {{ form_row(form.forme) }}
-            </div>
-            <div class="col-md-4">
-                    {{ form_row(form.quantite) }}
-            </div>
-            <div class="col-md-4">
-                    {{ form_row(form.famille) }}
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="nomFamille">Nom Famille</label>
-                    <input type="text" name="nomFamille" class="form-control nomFamille" id="nomFamille">
+    <div class="containerBackground">
+        <h3 class="h3 mb-5 font-weight-normal">Ajouter un produit</h3>
+        {{ form_start(form) }}
+                <div class="row">
+                <div class="col-md-4">
+                        {{ form_row(form.code) }}
                 </div>
-            </div>
-            <button class="btn btn-success ml-3">{{ button_label|default('Enregistrer') }}</button>
-        </div>
-    {{ form_end(form) }}
+                <div class="col-md-4">
+                        {{ form_row(form.designation) }}
+                </div>
+                <div class="col-md-4">
+                        {{ form_row(form.prixUnitaire) }}
+                </div>
+                <div class="col-md-4">
+                        {{ form_row(form.datePeremptionAt) }}
+                </div>
+                <div class="col-md-4">
+                        {{ form_row(form.nomFabricant) }}
+                </div>
+                <div class="col-md-4">
+                        {{ form_row(form.forme) }}
+                </div>
+                <div class="col-md-4">
+                        {{ form_row(form.quantite) }}
+                </div>
+                <div class="col-md-4">
+                        {{ form_row(form.famille) }}
+                </div>
+                <div class="col-md-4">
+                        <div class="form-group">
+                        <label for="nomFamille">Nom Famille</label>
+                        <input type="text" name="nomFamille" class="form-control nomFamille" id="nomFamille">
+                        </div>
+                </div>
+                <button class="btn btn-success ml-3">{{ button_label|default('Enregistrer') }}</button>
+                </div>
+        {{ form_end(form) }}
 
-    <div class="row">
-        <div class="col-md-4">
-            <br/><br/>
-            <a class="btn btn-outline-primary" href="{{ path('produits_index') }}">Retour à la liste des produits</a>
+        <div class="row">
+                <div class="col-md-4">
+                <br/><br/>
+                <a class="btn btn-outline-primary" href="{{ path('produits_index') }}">Retour à la liste des produits</a>
+                </div>
         </div>
     </div>
 

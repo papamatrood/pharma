@@ -5,6 +5,7 @@
 {% block angularJS %} ng-app {% endblock %}
 
 {% block body %}
+    <div class="containerBackground">
         <h3 class="font-italic">N°Pièce <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
         <br/><br/>
         {% for message in app.flashes('success') %}
@@ -155,6 +156,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Vendre</button>
         </form>
+    </div>
 
 {% endblock %}
 
