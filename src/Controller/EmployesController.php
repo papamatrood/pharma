@@ -191,7 +191,7 @@ class EmployesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/show", name="employes_show")
+     * @Route("/{id}", name="employes_show")
      */
     public function show(Employes $employe)
     {
@@ -240,7 +240,7 @@ class EmployesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="employes_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="employes_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Employes $employe): Response
     {

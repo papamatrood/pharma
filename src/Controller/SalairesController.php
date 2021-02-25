@@ -61,6 +61,12 @@ class SalairesController extends AbstractController
 
         $salaries = $em->getRepository(Salaires::class)->findBy(['mois' => $mois]);
 
+        if (empty($salaries)) {
+            return $this->render('salaires/salariesVide.html.twig', [
+                'mois' => $mois
+            ]);
+        }
+
         $html = $this->renderView('salaires/salariesPDF.html.twig', ['salaries' => $salaries, 'mois' => $mois]);
         $html2pdf = new Html2Pdf('P', 'A4', 'fr');
         $html2pdf->pdf->SetAuthor('DevAndClick');

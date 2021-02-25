@@ -4,11 +4,6 @@ $('document').ready(function () {
 
     $(this).prop('selected', 'selected');
 
-    //fermer la fénêtre quand on clique sur quitter dans la rubrique fichier
-    $("a.quitter").click(function (event) {
-        window.close();
-    });
-
 
     //Remplissage du champ nom de famille par séléction de code famille 
     $('select.codeFamille').change(function(){
@@ -79,17 +74,24 @@ $('document').ready(function () {
         $('#salaireMatricule option:selected').each(function () {
             id += $(this).val();
 
-            $.get('http://localhost:8000/admin/employes/' + id, function (data) {
-                $('#salairePrenomNom').val(data.employe);
-                $('#salaireDateNaissance').val(data.naissance);
-                $('#salaireNombreEnfant').val(data.enfants);
-                $('#salaireTypeContrat').val(data.contrat);
-                $('#salaireCategorie').val(data.categorie);
-                $('#salaireCivilite').val(data.civilite);
-                $('#salaireFonction').val(data.fonction);
-                $('#salaireDateEmbauche').val(data.embauche);
-                $('#salaireSituationFamiliale').val(data.situation);
-            }, "json");
+            $.get('http://localhost:8000/admin/employes/' + id, function () {
+            })
+                .done(function (data) {
+                    $('#salairePrenomNom').val(data.employe);
+                    $('#salaireDateNaissance').val(data.naissance);
+                    $('#salaireNombreEnfant').val(data.enfants);
+                    $('#salaireTypeContrat').val(data.contrat);
+                    $('#salaireCategorie').val(data.categorie);
+                    $('#salaireCivilite').val(data.civilite);
+                    $('#salaireFonction').val(data.fonction);
+                    $('#salaireDateEmbauche').val(data.embauche);
+                    $('#salaireSituationFamiliale').val(data.situation);
+                })
+                .fail(function () {
+                    alert("Erreur de chargement des informations l'employé d'id : " + id);
+                })
+                .always(function () {
+                });
 
         });
     }).change();
@@ -167,6 +169,17 @@ $('document').ready(function () {
             });
     });
 
+
+    // Fermer l'onglet
+
+    $('#quitter').on('click', function (event) {
+        event.preventDefault();
+        if (confirm("Êtes vous sûr de vouloir fermer l'onglet ?")) {
+            var myWindow = window.open("", "_self");
+            myWindow.document.write("");
+            setTimeout(function () { myWindow.close(); }, 1000);
+        }
+    });
 
 
 
