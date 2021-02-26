@@ -24,11 +24,13 @@
                     <th>Client</th>
                     <th>Produits</th>
                     <th>Quantité</th>
+                    <th>Montant TTC</th>
                     <th>Date de la vente</th>
                 </tr>
             </thead>
             <tbody>
             {% for vente in ventes %}
+                {% set total = 0 %}
                 <tr>
                     <td>{{ vente.reference }}</td>
                     <td>{{ vente.produits.nomClient }}</td>
@@ -42,7 +44,13 @@
                             {{ produit.quantite }} <br/>
                         {% endfor %}
                     </td>
-                    <td>{{ vente.dateventeAt ? vente.dateventeAt|date('Y-m-d') : '' }}</td>
+                    <td>
+                        {% for produit in vente.produits.produits %}
+                            {% set total = total + produit.net %}
+                        {% endfor %}
+                        {{ total|number_format(0, ' ', ' ') }} FCFA
+                    </td>
+                    <td>{{ vente.dateventeAt ? vente.dateventeAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
             {% else %}
                 <tr>

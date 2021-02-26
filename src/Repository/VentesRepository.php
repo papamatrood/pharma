@@ -18,6 +18,16 @@ class VentesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Ventes::class);
     }
+    
+    public function findAllWithDate($date)
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.dateVenteAt LIKE :date')
+            ->setParameter(':date', "$date%")
+            ->orderBy('v.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Ventes[] Returns an array of Ventes objects

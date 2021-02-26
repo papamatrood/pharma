@@ -23,7 +23,7 @@ class VentesController extends AbstractController
      */
     public function index(VentesRepository $ventesRepository)
     {
-        $ventes = $ventesRepository->findAll();
+        $ventes = $ventesRepository->findBy([], ['id' => 'DESC']);
         return $this->render('ventes/index.html.twig', [
             'ventes' => $ventes,
         ]);
@@ -115,7 +115,11 @@ class VentesController extends AbstractController
         }else {
             $recherche = new DateTime('today');
         }
-        $ventes = $ventesRepository->findBy(['dateVenteAt' => $recherche], ['utilisateur' => 'ASC']);
+
+        $date = $recherche->format('Y-m-d');
+
+        $ventes = $ventesRepository->findAllWithDate($date);
+        
         return $this->render('ventes/ventesJour.html.twig', [
             'ventes' => $ventes,
             'recherche' => $recherche
