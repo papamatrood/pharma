@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  Dim 31 jan. 2021 à 10:18
+-- Généré le :  ven. 26 fév. 2021 à 23:46
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `caisse` (
   `solde` int(11) DEFAULT NULL,
   `date_at` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `caisse`
@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS `caisse` (
 INSERT INTO `caisse` (`id`, `motif`, `entre`, `sortie`, `solde`, `date_at`) VALUES
 (7, 'Dépôt', 25000000, 0, 25000000, '2020-10-04'),
 (8, 'Livraison: Doliprane', 0, 625000, -625000, '2020-10-04'),
-(9, 'Livraison: Efferalgan', 0, 825000, -825000, '2020-10-04'),
 (11, 'Vente: Efferalgan', 16500, 0, 16500, '2020-10-04'),
 (12, 'Achat de stylo', 0, 3000, -3000, '2020-10-04'),
 (13, 'Vente: Efferalgan', 16500, 0, 16500, '2020-10-04'),
@@ -55,7 +54,10 @@ INSERT INTO `caisse` (`id`, `motif`, `entre`, `sortie`, `solde`, `date_at`) VALU
 (16, 'don', 500000, 0, 500000, '2020-10-04'),
 (17, 'Vente: Doliprane', 12500, 0, 12500, '2020-12-13'),
 (18, 'Vente: Efferalgan', 33000, 0, 33000, '2020-12-13'),
-(19, 'Vente: Paracétamol', 1000, 0, 1000, '2020-12-13');
+(19, 'Vente: Paracétamol', 1000, 0, 1000, '2020-12-13'),
+(20, 'Livraison: Efferalgan', 0, 750000, -750000, '2021-02-04'),
+(21, 'Vente: Paracétamol', 20000, 0, 20000, '2021-02-08'),
+(22, 'Vente: Efferalgan', 22500, 0, 22500, '2021-02-26');
 
 -- --------------------------------------------------------
 
@@ -98,16 +100,17 @@ CREATE TABLE IF NOT EXISTS `commandes` (
   `produits` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   PRIMARY KEY (`id`),
   KEY `IDX_35D4282CFB88E14F` (`utilisateur_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `commandes`
 --
 
 INSERT INTO `commandes` (`id`, `utilisateur_id`, `valider`, `reference`, `date_commande_at`, `produits`) VALUES
-(11, 3, 1, 1, '2020-10-04 00:00:00', 'a:4:{s:8:\"produits\";a:1:{i:1;a:5:{s:8:\"quantite\";i:500;s:9:\"idProduit\";i:1;s:11:\"codeProduit\";s:3:\"EFF\";s:18:\"designationProduit\";s:10:\"Efferalgan\";s:4:\"prix\";i:1650;}}s:13:\"idFournisseur\";i:1;s:17:\"numeroFournisseur\";s:4:\"F001\";s:14:\"nomFournisseur\";s:16:\"Cheiknei Diawara\";}'),
-(12, 3, 0, 2, '2020-10-04 00:00:00', 'a:4:{s:8:\"produits\";a:1:{i:3;a:5:{s:8:\"quantite\";i:500;s:9:\"idProduit\";i:3;s:11:\"codeProduit\";s:3:\"DOL\";s:18:\"designationProduit\";s:9:\"Doliprane\";s:4:\"prix\";i:1250;}}s:13:\"idFournisseur\";i:2;s:17:\"numeroFournisseur\";s:4:\"F002\";s:14:\"nomFournisseur\";s:14:\"Oumar Sangaré\";}'),
-(13, 3, 0, 3, '2020-10-04 00:00:00', 'a:4:{s:8:\"produits\";a:1:{i:4;a:4:{s:8:\"quantite\";i:700;s:9:\"idProduit\";i:4;s:11:\"codeProduit\";s:4:\"PARA\";s:18:\"designationProduit\";s:12:\"Paracétamol\";}}s:13:\"idFournisseur\";i:1;s:17:\"numeroFournisseur\";s:4:\"F001\";s:14:\"nomFournisseur\";s:16:\"Cheiknei Diawara\";}');
+(11, 3, 1, 1, '2021-02-04 00:00:00', 'a:4:{s:8:\"produits\";a:1:{i:1;a:5:{s:8:\"quantite\";i:500;s:4:\"prix\";i:1500;s:9:\"idProduit\";i:1;s:11:\"codeProduit\";s:3:\"EFF\";s:18:\"designationProduit\";s:10:\"Efferalgan\";}}s:13:\"idFournisseur\";i:1;s:17:\"numeroFournisseur\";s:4:\"F001\";s:14:\"nomFournisseur\";s:16:\"Cheiknei Diawara\";}'),
+(12, 3, 0, 2, '2021-02-04 00:00:00', 'a:4:{s:8:\"produits\";a:2:{i:3;a:4:{s:8:\"quantite\";i:200;s:9:\"idProduit\";i:3;s:11:\"codeProduit\";s:3:\"EFF\";s:18:\"designationProduit\";s:10:\"Efferalgan\";}i:4;a:4:{s:8:\"quantite\";i:900;s:9:\"idProduit\";i:4;s:11:\"codeProduit\";s:4:\"PARA\";s:18:\"designationProduit\";s:12:\"Paracétamol\";}}s:13:\"idFournisseur\";i:1;s:17:\"numeroFournisseur\";s:4:\"F001\";s:14:\"nomFournisseur\";s:16:\"Cheiknei Diawara\";}'),
+(13, 3, 0, 3, '2020-10-04 00:00:00', 'a:4:{s:8:\"produits\";a:1:{i:4;a:4:{s:8:\"quantite\";i:700;s:9:\"idProduit\";i:4;s:11:\"codeProduit\";s:4:\"PARA\";s:18:\"designationProduit\";s:12:\"Paracétamol\";}}s:13:\"idFournisseur\";i:1;s:17:\"numeroFournisseur\";s:4:\"F001\";s:14:\"nomFournisseur\";s:16:\"Cheiknei Diawara\";}'),
+(15, 3, 0, 4, '2021-02-22 00:00:00', 'a:4:{s:8:\"produits\";a:1:{i:3;a:4:{s:8:\"quantite\";i:500;s:9:\"idProduit\";i:3;s:11:\"codeProduit\";s:3:\"DOL\";s:18:\"designationProduit\";s:9:\"Doliprane\";}}s:13:\"idFournisseur\";i:1;s:17:\"numeroFournisseur\";s:4:\"F001\";s:14:\"nomFournisseur\";s:16:\"Cheiknei Diawara\";}');
 
 -- --------------------------------------------------------
 
@@ -136,7 +139,11 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20201003225541', '2020-10-03 22:56:05', 1780),
 ('DoctrineMigrations\\Version20201004091306', '2020-10-04 09:18:31', 719),
 ('DoctrineMigrations\\Version20201004093221', '2020-10-04 09:32:33', 1282),
-('DoctrineMigrations\\Version20201004105130', '2020-10-04 10:51:42', 1356);
+('DoctrineMigrations\\Version20201004105130', '2020-10-04 10:51:42', 1356),
+('DoctrineMigrations\\Version20210208222503', '2021-02-08 22:27:36', 5126),
+('DoctrineMigrations\\Version20210208223421', '2021-02-08 22:34:37', 2598),
+('DoctrineMigrations\\Version20210209190623', '2021-02-09 19:07:26', 8589),
+('DoctrineMigrations\\Version20210209191352', '2021-02-09 19:14:25', 3065);
 
 -- --------------------------------------------------------
 
@@ -165,18 +172,20 @@ CREATE TABLE IF NOT EXISTS `employes` (
   `date_contrat_at` datetime NOT NULL,
   `situation_familiale` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre_enfant` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `utilisateur_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_A94BC0F0FB88E14F` (`utilisateur_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `employes`
 --
 
-INSERT INTO `employes` (`id`, `matricule`, `nom`, `prenom`, `date_naissance_at`, `lieu_naissance`, `adresse`, `nationalite`, `civilite`, `date_embauche_at`, `fonction`, `telephone`, `email`, `categorie`, `numero_assurance_maladie`, `type_contrat`, `date_contrat_at`, `situation_familiale`, `nombre_enfant`) VALUES
-(1, 'EMP001', 'Diakité', 'Yoro', '1990-12-15 00:00:00', 'Bamako', 'Kalaban Coro', 'Malienne', 'Monsieur', '2020-09-24 00:00:00', 'Directeur Commercial', '76201526', 'yoro@gmail.com', 'Permanent', 258, 'CDI', '2020-09-24 00:00:00', 'Marié(e)', 2),
-(2, 'EMP002', 'Dembélé', 'Mamourou', '1990-01-01 00:00:00', 'Sikasso', 'Bamako Coura', 'Malienne', 'Monsieur', '2019-10-03 00:00:00', 'Vendeur', '78211254', 'mamourou@gmail.com', 'Vaccataire', 2, 'CDD', '2019-10-03 00:00:00', 'Madame', 0),
-(3, 'M001', 'MAMOU', 'Awa', '1984-01-01 00:00:00', 'Bamako', 'LAFIABOUGOU', 'Malienne', 'Mademoiselle', '2020-10-02 00:00:00', 'Secretaire', '45655214', 'awa@gmail.com', 'Permanent', 2, 'CDI', '2020-10-02 00:00:00', 'Madame', 0),
-(4, 'M002', 'Mama', 'eve', '1990-03-04 00:00:00', 'bangui', 'BAMBARI', 'Centrafricaine', 'Madame', '2020-10-04 00:00:00', 'comptable', '56854785', 'mama@yahoo.fr', 'Vaccataire', 3, 'CDD', '2020-10-04 00:00:00', 'Marié(e)', 1);
+INSERT INTO `employes` (`id`, `matricule`, `nom`, `prenom`, `date_naissance_at`, `lieu_naissance`, `adresse`, `nationalite`, `civilite`, `date_embauche_at`, `fonction`, `telephone`, `email`, `categorie`, `numero_assurance_maladie`, `type_contrat`, `date_contrat_at`, `situation_familiale`, `nombre_enfant`, `utilisateur_id`) VALUES
+(1, 'EMP001', 'Diakité', 'Yoro', '1990-12-15 00:00:00', 'Bamako', 'Kalaban Coro', 'Malienne', 'Monsieur', '2020-09-24 00:00:00', 'Directeur Commercial', '76201526', 'yoro@gmail.com', 'Permanent', 258, 'CDI', '2020-09-24 00:00:00', 'Marié(e)', 2, 6),
+(2, 'EMP002', 'Dembélé', 'Mamourou', '1990-01-01 00:00:00', 'Sikasso', 'Bamako Coura', 'Malienne', 'Monsieur', '2019-10-03 00:00:00', 'Vendeur', '78211254', 'mamourou@gmail.com', 'Vaccataire', 2, 'CDD', '2019-10-03 00:00:00', 'Madame', 0, NULL),
+(3, 'M001', 'MAMOU', 'Awa', '1984-01-01 00:00:00', 'Bamako', 'LAFIABOUGOU', 'Malienne', 'Mademoiselle', '2020-10-02 00:00:00', 'Secretaire', '45655214', 'awa@gmail.com', 'Permanent', 2, 'CDI', '2020-10-02 00:00:00', 'Madame', 0, NULL),
+(4, 'M002', 'Mama', 'eve', '1990-03-04 00:00:00', 'bangui', 'BAMBARI', 'Centrafricaine', 'Madame', '2020-10-04 00:00:00', 'comptable', '56854785', 'mama@yahoo.fr', 'Vaccataire', 3, 'CDD', '2020-10-04 00:00:00', 'Marié(e)', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `familles` (
   `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `familles`
@@ -213,7 +222,8 @@ CREATE TABLE IF NOT EXISTS `familles` (
 INSERT INTO `familles` (`id`, `code`, `nom`) VALUES
 (1, 'F001', 'Générique'),
 (3, 'F002', 'Famille 2'),
-(4, 'f004', 'aspic');
+(4, 'F003', 'aspic'),
+(5, 'F004', 'Nouvelle famille');
 
 -- --------------------------------------------------------
 
@@ -230,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `fournisseurs` (
   `adresse` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `fournisseurs`
@@ -239,7 +249,8 @@ CREATE TABLE IF NOT EXISTS `fournisseurs` (
 INSERT INTO `fournisseurs` (`id`, `prenom`, `nom`, `numero`, `adresse`, `telephone`) VALUES
 (1, 'Cheiknei', 'Diawara', 'F001', 'Tomikorobougou', '76201544'),
 (2, 'Oumar', 'Sangaré', 'F002', 'Badjalan 1', '75402062'),
-(3, 'mousa', 'JEAN', 'f003', 'ACI2000', '45585745');
+(3, 'mousa', 'JEAN', 'F003', 'ACI2000', '45585745'),
+(4, 'Mariam', 'Traoré', 'F004', 'Banconi', '78775423');
 
 -- --------------------------------------------------------
 
@@ -267,9 +278,9 @@ CREATE TABLE IF NOT EXISTS `produits` (
 --
 
 INSERT INTO `produits` (`id`, `famille_id`, `code`, `designation`, `prix_unitaire`, `date_peremption_at`, `nom_fabricant`, `forme`, `quantite`) VALUES
-(1, 1, 'EFF', 'Efferalgan', 1650, '2021-09-25 00:00:00', 'Pharmacie du Mali', 'Sirop', 860),
+(1, 1, 'EFF', 'Efferalgan', 1500, '2021-09-25 00:00:00', 'Pharmacie du Mali', 'Sirop', 845),
 (3, 1, 'DOL', 'Doliprane', 1250, '2021-09-26 00:00:00', 'Pharmacie du Mali', 'Sirop', 5480),
-(4, 3, 'PARA', 'Paracétamol', 100, '2021-10-04 00:00:00', 'Pharmacie du Mali', 'Sirop', 980);
+(4, 3, 'PARA', 'Paracétamol', 100, '2021-10-04 00:00:00', 'Pharmacie du Mali', 'Sirop', 780);
 
 -- --------------------------------------------------------
 
@@ -340,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `stock` (
   `situation` int(11) DEFAULT NULL,
   `date_at` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `stock`
@@ -348,13 +359,15 @@ CREATE TABLE IF NOT EXISTS `stock` (
 
 INSERT INTO `stock` (`id`, `code`, `designation`, `entre`, `sortie`, `situation`, `date_at`) VALUES
 (1, 'DOL', 'Doliprane', 500, 0, 5497, '2020-10-04'),
-(2, 'EFF', 'Efferalgan', 500, 0, 900, '2020-10-04'),
 (4, 'EFF', 'Efferalgan', 0, 10, 890, '2020-10-04'),
 (5, 'EFF', 'Efferalgan', 0, 10, 880, '2020-10-04'),
 (6, 'PARA', 'Paracétamol', 0, 10, 990, '2020-10-04'),
 (7, 'DOL', 'Doliprane', 0, 10, 5480, '2020-12-13'),
 (8, 'EFF', 'Efferalgan', 0, 20, 860, '2020-12-13'),
-(9, 'PARA', 'Paracétamol', 0, 10, 980, '2020-12-13');
+(9, 'PARA', 'Paracétamol', 0, 10, 980, '2020-12-13'),
+(10, 'EFF', 'Efferalgan', 500, 0, 860, '2021-02-04'),
+(11, 'PARA', 'Paracétamol', 0, 200, 780, '2021-02-08'),
+(12, 'EFF', 'Efferalgan', 0, 15, 845, '2021-02-26');
 
 -- --------------------------------------------------------
 
@@ -369,20 +382,20 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `roles` json NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `employe_id` int(11) DEFAULT NULL,
   `role` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_497B315ED37CC8AC` (`nom_utilisateur`),
-  KEY `IDX_497B315E1B65292` (`employe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `UNIQ_497B315ED37CC8AC` (`nom_utilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`id`, `nom_utilisateur`, `roles`, `password`, `email`, `employe_id`, `role`) VALUES
-(3, 'admin1', '[]', '$2y$12$jSC271Koo3DeX1d.5CTCbu/vnp3flxezlqd77KYqQ1gWpfXJ5ArVq', 'admin1@gmail.com', NULL, 'ROLE_ADMIN'),
-(4, 'admin2', '[]', '$2y$12$V6om2OnWINYlseY.xxaBHeUMCgfO4m2L9MvOOLOHRg2OPdsSgMB22', 'admin2@gmail.com', NULL, 'ROLE_PHARMACIEN');
+INSERT INTO `utilisateurs` (`id`, `nom_utilisateur`, `roles`, `password`, `email`, `role`) VALUES
+(3, 'admin1', '[]', '$2y$12$jSC271Koo3DeX1d.5CTCbu/vnp3flxezlqd77KYqQ1gWpfXJ5ArVq', 'admin1@gmail.com', 'ROLE_ADMIN'),
+(4, 'admin2', '[]', '$2y$12$V6om2OnWINYlseY.xxaBHeUMCgfO4m2L9MvOOLOHRg2OPdsSgMB22', 'admin2@gmail.com', 'ROLE_PHARMACIEN'),
+(5, 'user1', '[]', '$2y$12$n7PWvCnB3Kqw/S7ydr429OGKQFbRb4HyVqGN016Zntwjuwwjopkk2', 'user1@gmail.com', 'ROLE_USER'),
+(6, 'admintest', '[]', '$2y$12$UqJLMLEw9UONMDkXZIj.iezFUB4OkzrlWjnVJUDaXXhI6Fc9b64bC', 'yoro@gmail.com', 'ROLE_PHARMACIEN');
 
 -- --------------------------------------------------------
 
@@ -400,7 +413,7 @@ CREATE TABLE IF NOT EXISTS `ventes` (
   `produits` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   PRIMARY KEY (`id`),
   KEY `IDX_64EC489AFB88E14F` (`utilisateur_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `ventes`
@@ -411,7 +424,9 @@ INSERT INTO `ventes` (`id`, `utilisateur_id`, `valider`, `reference`, `date_vent
 (4, 3, 1, 2, '2020-10-04 00:00:00', 'a:6:{s:8:\"produits\";a:1:{i:1;a:9:{s:8:\"quantite\";i:10;s:9:\"idProduit\";i:1;s:11:\"codeProduit\";s:3:\"EFF\";s:18:\"designationProduit\";s:10:\"Efferalgan\";s:4:\"prix\";s:4:\"1650\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:9:\"Plaquette\";s:4:\"brut\";s:5:\"16500\";s:3:\"net\";s:5:\"16500\";}}s:8:\"idClient\";i:2;s:12:\"numeroClient\";s:4:\"C002\";s:9:\"nomClient\";s:33:\"pharmacie lafiab pharmacie lafiab\";s:7:\"adresse\";s:8:\"faladjie\";s:9:\"telephone\";s:8:\"56454745\";}'),
 (5, 3, 1, 3, '2020-10-04 00:00:00', 'a:6:{s:8:\"produits\";a:1:{i:4;a:9:{s:8:\"quantite\";i:10;s:9:\"idProduit\";i:4;s:11:\"codeProduit\";s:4:\"PARA\";s:18:\"designationProduit\";s:12:\"Paracétamol\";s:4:\"prix\";s:3:\"100\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:9:\"Plaquette\";s:4:\"brut\";s:4:\"1000\";s:3:\"net\";s:4:\"1000\";}}s:8:\"idClient\";i:2;s:12:\"numeroClient\";s:4:\"C002\";s:9:\"nomClient\";s:33:\"pharmacie lafiab pharmacie lafiab\";s:7:\"adresse\";s:8:\"faladjie\";s:9:\"telephone\";s:8:\"56454745\";}'),
 (6, 3, 1, 4, '2020-12-13 00:00:00', 'a:6:{s:8:\"produits\";a:1:{i:3;a:9:{s:8:\"quantite\";i:10;s:9:\"idProduit\";i:3;s:11:\"codeProduit\";s:3:\"DOL\";s:18:\"designationProduit\";s:9:\"Doliprane\";s:4:\"prix\";s:4:\"1250\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:6:\"Boîte\";s:4:\"brut\";s:5:\"12500\";s:3:\"net\";s:5:\"12500\";}}s:8:\"idClient\";i:1;s:12:\"numeroClient\";s:4:\"C001\";s:9:\"nomClient\";s:37:\"Client au comptant Client au comptant\";s:7:\"adresse\";s:0:\"\";s:9:\"telephone\";s:0:\"\";}'),
-(7, 3, 1, 5, '2020-12-13 00:00:00', 'a:6:{s:8:\"produits\";a:2:{i:1;a:9:{s:8:\"quantite\";i:20;s:9:\"idProduit\";i:1;s:11:\"codeProduit\";s:3:\"EFF\";s:18:\"designationProduit\";s:10:\"Efferalgan\";s:4:\"prix\";s:4:\"1650\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:6:\"Boîte\";s:4:\"brut\";s:5:\"33000\";s:3:\"net\";s:5:\"33000\";}i:4;a:9:{s:8:\"quantite\";i:10;s:9:\"idProduit\";i:4;s:11:\"codeProduit\";s:4:\"PARA\";s:18:\"designationProduit\";s:12:\"Paracétamol\";s:4:\"prix\";s:3:\"100\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:6:\"Boîte\";s:4:\"brut\";s:4:\"1000\";s:3:\"net\";s:4:\"1000\";}}s:8:\"idClient\";i:1;s:12:\"numeroClient\";s:4:\"C001\";s:9:\"nomClient\";s:37:\"Client au comptant Client au comptant\";s:7:\"adresse\";s:0:\"\";s:9:\"telephone\";s:0:\"\";}');
+(7, 3, 1, 5, '2020-12-13 00:00:00', 'a:6:{s:8:\"produits\";a:2:{i:1;a:9:{s:8:\"quantite\";i:20;s:9:\"idProduit\";i:1;s:11:\"codeProduit\";s:3:\"EFF\";s:18:\"designationProduit\";s:10:\"Efferalgan\";s:4:\"prix\";s:4:\"1650\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:6:\"Boîte\";s:4:\"brut\";s:5:\"33000\";s:3:\"net\";s:5:\"33000\";}i:4;a:9:{s:8:\"quantite\";i:10;s:9:\"idProduit\";i:4;s:11:\"codeProduit\";s:4:\"PARA\";s:18:\"designationProduit\";s:12:\"Paracétamol\";s:4:\"prix\";s:3:\"100\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:6:\"Boîte\";s:4:\"brut\";s:4:\"1000\";s:3:\"net\";s:4:\"1000\";}}s:8:\"idClient\";i:1;s:12:\"numeroClient\";s:4:\"C001\";s:9:\"nomClient\";s:37:\"Client au comptant Client au comptant\";s:7:\"adresse\";s:0:\"\";s:9:\"telephone\";s:0:\"\";}'),
+(8, 3, 1, 6, '2021-02-08 00:00:00', 'a:6:{s:8:\"produits\";a:1:{i:4;a:9:{s:8:\"quantite\";i:200;s:9:\"idProduit\";i:4;s:11:\"codeProduit\";s:4:\"PARA\";s:18:\"designationProduit\";s:12:\"Paracétamol\";s:4:\"prix\";s:3:\"100\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:6:\"Boîte\";s:4:\"brut\";s:5:\"20000\";s:3:\"net\";s:5:\"20000\";}}s:8:\"idClient\";i:1;s:12:\"numeroClient\";s:4:\"C001\";s:9:\"nomClient\";s:37:\"Client au comptant Client au comptant\";s:7:\"adresse\";s:0:\"\";s:9:\"telephone\";s:0:\"\";}'),
+(9, 3, 1, 7, '2021-02-26 21:01:11', 'a:6:{s:8:\"produits\";a:1:{i:1;a:9:{s:8:\"quantite\";i:15;s:9:\"idProduit\";i:1;s:11:\"codeProduit\";s:3:\"EFF\";s:18:\"designationProduit\";s:10:\"Efferalgan\";s:4:\"prix\";s:4:\"1500\";s:6:\"remise\";s:1:\"0\";s:9:\"emballage\";s:6:\"Boîte\";s:4:\"brut\";s:5:\"22500\";s:3:\"net\";s:5:\"22500\";}}s:8:\"idClient\";i:2;s:12:\"numeroClient\";s:4:\"C002\";s:9:\"nomClient\";s:33:\"pharmacie lafiab pharmacie lafiab\";s:7:\"adresse\";s:8:\"faladjie\";s:9:\"telephone\";s:8:\"56454745\";}');
 
 --
 -- Contraintes pour les tables déchargées
@@ -422,6 +437,12 @@ INSERT INTO `ventes` (`id`, `utilisateur_id`, `valider`, `reference`, `date_vent
 --
 ALTER TABLE `commandes`
   ADD CONSTRAINT `FK_35D4282CFB88E14F` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`);
+
+--
+-- Contraintes pour la table `employes`
+--
+ALTER TABLE `employes`
+  ADD CONSTRAINT `FK_A94BC0F0FB88E14F` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`);
 
 --
 -- Contraintes pour la table `produits`
@@ -440,12 +461,6 @@ ALTER TABLE `reset_password_request`
 --
 ALTER TABLE `salaires`
   ADD CONSTRAINT `FK_718524441B65292` FOREIGN KEY (`employe_id`) REFERENCES `employes` (`id`);
-
---
--- Contraintes pour la table `utilisateurs`
---
-ALTER TABLE `utilisateurs`
-  ADD CONSTRAINT `FK_497B315E1B65292` FOREIGN KEY (`employe_id`) REFERENCES `employes` (`id`);
 
 --
 -- Contraintes pour la table `ventes`
