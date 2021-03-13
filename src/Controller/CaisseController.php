@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Caisse;
 use App\Form\CaisseType;
+use App\Form\DepenseType;
 use Spipu\Html2Pdf\Html2Pdf;
 use App\Repository\CaisseRepository;
-use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,15 +42,21 @@ class CaisseController extends AbstractController
 
     /**
      * @Route("/approvisionnement", name="caisse_approvisionnement")
+     * @Route("/approvisionnement/edit/{id}", name="approvisionnement_edit")
      */
-    public function approvisionnement(Request $request): Response
+    public function approvisionnement(Request $request, Caisse $caisse = null): Response
     {
-        $caisse = new Caisse();
+        if(is_null($caisse)){
+            $caisse = new Caisse();
+        }
+
         $form = $this->createForm(CaisseType::class, $caisse);
         $form->handleRequest($request);
 
+        $entityManager = $this->getDoctrine()->getManager();
+        $approvisionnements = $entityManager->getRepository(Caisse::class)->findBy(['sortie' => 0]);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entree = (int) $caisse->getEntre();
             $sortie = (int) $caisse->getSortie();
             $solde = $caisse->getEntre() - (int) $caisse->getSortie();
@@ -63,35 +70,45 @@ class CaisseController extends AbstractController
             $entityManager->persist($caisse);
             $entityManager->flush();
 
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('caisse_approvisionnement');
         }
 
         return $this->render('caisse/approvisionnement.html.twig', [
             'caisse' => $caisse,
+            'approvisionnements' => $approvisionnements,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/depense", name="caisse_depense")
+     * @Route("/approvisionnement/delete/{id}", name="approvisionnement_delete")
      */
-    public function depense(Request $request): Response
+    public function approvisionnementDelete(Caisse $caisse = null)
     {
-        $caisse = new Caisse();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($caisse);
+        $entityManager->flush();
 
-        $form = $this->createFormBuilder($caisse)
-            ->add('motif', null, [
-                'label' => 'Motif de la dépense'
-            ])
-            ->add('sortie', null, [
-                'label' => 'Montant'
-            ])
-            ->getForm();
+        return $this->redirectToRoute('caisse_approvisionnement');
+    }
+
+    /**
+     * @Route("/depense", name="caisse_depense")
+     * @Route("/depenses/edit/{id}", name="depense_edit")
+     */
+    public function depense(Request $request, Caisse $caisse = null): Response
+    {
+        if(is_null($caisse)){
+            $caisse = new Caisse();
+        }
+
+        $form = $this->createForm(DepenseType::class, $caisse);
 
         $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
+        $depenses = $entityManager->getRepository(Caisse::class)->findBy(['entre' => 0]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entree = (int) $caisse->getEntre();
             $sortie = (int) $caisse->getSortie();
             $solde = $caisse->getEntre() - (int) $caisse->getSortie();
@@ -105,13 +122,26 @@ class CaisseController extends AbstractController
             $entityManager->persist($caisse);
             $entityManager->flush();
 
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('caisse_depense');
         }
 
         return $this->render('caisse/depense.html.twig', [
             'caisse' => $caisse,
+            'depenses' => $depenses,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/depense/delete/{id}", name="depense_delete")
+     */
+    public function depenseDelete(Caisse $caisse = null)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($caisse);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('caisse_depense');
     }
 
     /**

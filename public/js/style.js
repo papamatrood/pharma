@@ -164,7 +164,7 @@ $('document').ready(function () {
             .always(function () {
                 $(function () {
                     let $tds = document.querySelectorAll('.suppProduitCommande');
-                    alert($tds.length)
+                    
                 }).change();
             });
     });

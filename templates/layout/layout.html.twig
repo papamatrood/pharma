@@ -10,7 +10,7 @@
           
         <style>
           body {
-            background-image: url("{{ asset('images/image1.jpg') }}");
+            background-image: url("{{ asset('images/image3.jpg') }}");
             background-repeat: no-repeat; /* Do not repeat the image */
             background-size: cover; 
           }
@@ -86,9 +86,7 @@
                   <li><a class="dropdown-item" href="{{ path('ventes_new') }}">Opération de Vente</a></li>
                   <li><a class="dropdown-item" href="{{ path('ventes_index') }}">Produits Vendus</a></li>          
                   <li><a class="dropdown-item" href="{{ path('ventes_jour') }}">Ventes du jour</a></li>          
-                  <div class="dropdown-divider"></div>
-                  <li><a class="dropdown-item" href="{{ path('ventes_index') }}">Retour sur Vente</a></li>
-                </ul>
+                  <div class="dropdown-divider"></div></ul>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -108,10 +106,11 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink05">
                   <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Gestion des Règlements</a>
-                    <ul class="dropdown-menu">
+                   {# <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#">Règlement Fournisseur</a></li>
                       <li><a class="dropdown-item" href="#">Règlement Client</a></li>
                     </ul>
+                    #}
                   </li>
                   <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Caisse</a>
                     <ul class="dropdown-menu">

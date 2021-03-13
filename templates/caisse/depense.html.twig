@@ -17,5 +17,35 @@
 
             <a class="btn btn-outline-primary" href="{{ path('caisse_pdf') }}">Retour à la liste</a>
         </div>
+        <div class="col-md-8 bg-light p-3">
+            <h3>Liste des dépenses</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Montant</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for depense in depenses %}
+                    <tr>
+                        <td>{{ depense.motif }}</td>
+                        <td>{{ depense.sortie }}</td>
+                        <td>
+                            <a class="btn btn-outline-primary" href="{{ path('depense_edit', {'id': depense.id}) }}"><i class="far fa-edit"></i></a>
+                            <a class="btn btn-outline-danger" href="{{ path('depense_delete', {'id': depense.id}) }}">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

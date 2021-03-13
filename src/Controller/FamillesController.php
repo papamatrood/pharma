@@ -86,7 +86,7 @@ class FamillesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="familles_delete")
+     * @Route("/delete/{id}", name="familles_delete")
      */
     public function delete(Request $request, Familles $famille)
     {

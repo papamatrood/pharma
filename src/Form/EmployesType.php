@@ -28,8 +28,8 @@ class EmployesType extends AbstractType
             'CDI' => 'CDI'
         ];
         $categories = [
-            'Vaccataire' => 'Vaccataire',
-            'Permanent' => 'Permanent'
+            'A1' => 'A1',
+            'B1' => 'B1'
         ];
         $builder
             ->add('matricule')

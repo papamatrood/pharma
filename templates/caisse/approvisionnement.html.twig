@@ -17,5 +17,35 @@
 
             <a class="btn btn-outline-primary" href="{{ path('caisse_pdf') }}">Retour à la liste</a>
         </div>
+        <div class="col-md-8 bg-light p-3">
+            <h3>Liste des approvisionnements</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Montant</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for approvisionnement in approvisionnements %}
+                    <tr>
+                        <td>{{ approvisionnement.motif }}</td>
+                        <td>{{ approvisionnement.entre }}</td>
+                        <td>
+                            <a class="btn btn-outline-primary" href="{{ path('approvisionnement_edit', {'id': approvisionnement.id}) }}"><i class="far fa-edit"></i></a>
+                            <a class="btn btn-outline-danger" href="{{ path('approvisionnement_delete', {'id': approvisionnement.id}) }}">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
