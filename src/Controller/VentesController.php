@@ -23,7 +23,11 @@ class VentesController extends AbstractController
      */
     public function index(VentesRepository $ventesRepository)
     {
+<<<<<<< HEAD
         $ventes = $ventesRepository->findBy([], ['id' => 'DESC']);
+=======
+        $ventes = $ventesRepository->findBy(array(),array('dateVenteAt' => 'DESC'));
+>>>>>>> C'est près qu'au complet
         return $this->render('ventes/index.html.twig', [
             'ventes' => $ventes,
         ]);

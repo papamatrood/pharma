@@ -116,6 +116,7 @@ $('document').ready(function () {
 
 
     //Ajout d'un produit dans la liste des produits à commander
+    /*
     $('.commandeFormulaire').submit(function (event) {
         event.preventDefault();
         let $form = $(this);
@@ -144,7 +145,7 @@ $('document').ready(function () {
             $form.find('button').text('Valider');
         });
     });
-
+*/
 
     //Suppression d'un produit dans la liste des produits à commander
     $(document).on('click', '.suppProduitCommande', function (event) {

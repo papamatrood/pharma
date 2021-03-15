@@ -17,5 +17,39 @@
 
             <a class="btn btn-outline-primary" href="{{ path('caisse_pdf') }}">Retour à la liste</a>
         </div>
+        <div class="col-md-8 bg-light p-3">
+            <h3>Liste des approvionnements</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Motif</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for approvisionnement in approvisionnements %}
+                    <tr>
+                        <td>{{ approvisionnement.motif }}</td>
+                        <td>{{ approvisionnement.entre }}</td>
+                        <td>{{ approvisionnement.dateAt|date('Y-m-d H:i:s') }}</td>
+                        <td>
+                            <a class="btn btn-outline-primary" href="{{ path('edit_approvisionnement', {'id': approvisionnement.id}) }}"><i class="far fa-edit"></i></a>
+                            <form method="post" action="{{ path('delete_approvisionnement', {'id': approvisionnement.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ approvisionnement.id) }}">
+                                <button class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
