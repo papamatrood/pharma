@@ -18,6 +18,16 @@ class StockRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Stock::class);
     }
+    
+    public function findAllWithDate($date)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.dateAt LIKE :date')
+            ->setParameter(':date', "$date%")
+            ->orderBy('s.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Stock[] Returns an array of Stock objects

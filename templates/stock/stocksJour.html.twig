@@ -1,0 +1,65 @@
+{% set ttc = 0 %}
+{% extends 'layout/layout.html.twig' %}
+
+{% block title %}Stocks du jour{% endblock %}
+
+{% block angularJS %} ng-app {% endblock %}
+
+{% block body %}
+    <div class="containerBackground">
+        <h3>Stocks du jour ({{ recherche|date("Y-m-d") }})</h3>
+        <br/><br/>
+        {% for message in app.flashes('errors') %}
+            <div class="alert alert-danger">
+                    {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                    {{ message }}
+            </div>
+        {% endfor %}
+
+        <form class="form-inline" method="GET">
+            <input name="recherche" class="form-control" type="date" value="{{ recherche|date("Y-m-d") }}">
+            <button type="submit" class="btn btn-primary">Recherche</button>
+        </form>
+        <br>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Code produit</th>
+                    <th>Désignation</th>
+                    <th>Entrée</th>
+                    <th>Sortie</th>
+                    <th>Situation</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.code }}</td>
+                    <td>{{ stock.designation }}</td>
+                    <td>{{ stock.entre|number_format(0, '', ' ')  }}</td>
+                    <td>{{ stock.sortie|number_format(0, '', ' ')  }}</td>
+                    <td>{{ stock.situation|number_format(0, '', ' ')  }}</td>
+                    <td>{{ stock.dateAt }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <form class="form-inline" method="GET" action="{{ path('stock_par_jour') }}" >
+            <input name="jour" class="form-control" type="hidden" value="{{ recherche|date("Y-m-d") }}">
+            <button type="submit" class="btn btn-info">Imprimer</button>
+        </form>
+    </div>
+
+
+{% endblock %}
+
