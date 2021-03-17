@@ -42,6 +42,11 @@ class Caisse
      */
     private $dateAt;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $reference;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Caisse
     public function setDateAt(string $dateAt): self
     {
         $this->dateAt = $dateAt;
+
+        return $this;
+    }
+
+    public function getReference(): ?int
+    {
+        return $this->reference;
+    }
+
+    public function setReference(?int $reference): self
+    {
+        $this->reference = $reference;
 
         return $this;
     }

@@ -152,7 +152,6 @@ class VentesController extends AbstractController
         $reference = $ventes->getReference();
         $clients  = $entityManager->getRepository(Clients::class)->findAll();
         $produits      = $entityManager->getRepository(Produits::class)->findAll();
-
         $session = $request->getSession();
         if (empty($session->get('vente'))) {
             $session->set('vente', $ventes->getProduits());
@@ -194,7 +193,6 @@ class VentesController extends AbstractController
 
             return $this->redirectToRoute('ventes_edit', ['idVente' => $idVente ]);
         }
-        unset($vente['produits'][3]);
         return $this->render('ventes/edit.html.twig', [
             'clients' => $clients,
             'produits' => $produits,
@@ -227,11 +225,13 @@ class VentesController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $vente  = $entityManager->getRepository(Ventes::class)->find($idVente);
+        $reference = $vente->getReference();
+        $caisses  = $entityManager->getRepository(Caisse::class)->findBy(['reference' => $reference]);
+        $stocks  = $entityManager->getRepository(Stock::class)->findBy(['reference' => $reference]);
+        $date = $vente->getDateVenteAt()->format('Y-m-d');
         $session = $request->getSession();
         $panier = $session->get('vente');
         $utilisateur = $this->getUser();
-        $dateVente = $request->query->get('dateVente');
-        unset($panier['produits'][3]);
 
         foreach ($panier['produits'] as $p) {
             $produit = $entityManager->getRepository(Produits::class)->find($p['idProduit']);
@@ -242,14 +242,21 @@ class VentesController extends AbstractController
             $entree = (int) $p['quantite'] * $prix;
             $solde = (int) $p['quantite'] * $prix;
 
+            foreach ($caisses as $caisse) {
+                $entityManager->remove($caisse);
+            }
+
+            foreach ($stocks as $stock) {
+                $entityManager->remove($stock);
+            }
+
             $caisse = new Caisse();
             $caisse->setMotif("Vente: " . $p['designationProduit']);
             $caisse->setSortie(0);
             $caisse->setEntre($entree);
             $caisse->setSolde($solde);
-            $date = new DateTime('now');
-            $now = $date->format('Y-m-d');
-            $caisse->setDateAt($now);
+            $caisse->setReference($reference);
+            $caisse->setDateAt($date);
 
             $stock = new Stock();
             $stock->setCode($p['codeProduit']);
@@ -257,14 +264,14 @@ class VentesController extends AbstractController
             $stock->setSortie($p['quantite']);
             $stock->setEntre(0);
             $stock->setSituation($quantite);
-            $stock->setDateAt($now);
+            $stock->setReference($reference);
+            $stock->setDateAt($date);
             
             $entityManager->persist($produit);
             $entityManager->persist($caisse);
             $entityManager->persist($stock);
         }
         $utilisateur = $this->getUser();
-        $dateVente = $request->query->get('dateVente');
 
         $produits['produits'] = $session->get('vente')['produits'];
         $produits['idClient'] = (int) $request->query->get('client');
@@ -274,7 +281,6 @@ class VentesController extends AbstractController
         $produits['telephone'] = $request->query->get('telephone');
 
         $vente->setValider(true);
-        $vente->setDateVenteAt(new DateTime($dateVente));
         $vente->setUtilisateur($utilisateur);
         $vente->setProduits($produits);
         $entityManager->persist($vente);
@@ -331,6 +337,7 @@ class VentesController extends AbstractController
             $caisse->setSortie(0);
             $caisse->setEntre($p['quantite'] * $p['prix']);
             $caisse->setSolde($p['quantite'] * $p['prix']);
+            $caisse->setReference((int) $reference);
             $date = new DateTime('now');
             $now = $date->format('Y-m-d');
             $caisse->setDateAt($now);
@@ -341,6 +348,7 @@ class VentesController extends AbstractController
             $stock->setSortie($p['quantite']);
             $stock->setEntre(0);
             $stock->setSituation($quantite);
+            $stock->setReference((int) $reference);
             $stock->setDateAt($now);
             
             $entityManager->persist($produit);
