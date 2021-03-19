@@ -94,7 +94,7 @@
                         <div class="col-md-4">
                                 <div class="form-group">
                                         <label  class="mr-sm-2" for="salaireNbreHeure">Nombre heure</label>
-                                        <input name="salaireNbreHeure" type="text" class="form-control form-control-sm" id="salaireNbreHeure">
+                                        <input name="salaireNbreHeure" type="text" ng-model="salaireNbreHeure" ng-init="salaireNbreHeure='196'" class="form-control form-control-sm" id="salaireNbreHeure" value=" 196 " >
                                 </div>
                                 <div class="form-group">
                                         <label  class="mr-sm-2" for="salaireBase">Salaire de base</label>
@@ -108,7 +108,7 @@
                         <div class="col-md-4">
                                 <div class="form-group">
                                         <label  class="mr-sm-2" for="salaireTauxHoraire">Taux horaire</label>
-                                        <input name="salaireTauxHoraire" type="text" class="form-control form-control-sm" id="salaireTauxHoraire">
+                                        <input name="salaireTauxHoraire" type="text" class="form-control form-control-sm" id="salaireTauxHoraire" value="{{ ('{{((1* salaireBase) / (salaireNbreHeure * 1)) }}') }}">
                                 </div>
                                 <div class="form-group">
                                         <label  class="mr-sm-2" for="salairePrimes">Primes</label>

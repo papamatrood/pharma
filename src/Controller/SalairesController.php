@@ -48,13 +48,50 @@ class SalairesController extends AbstractController
     }
 
     /**
-     * @Route("/mois/", name="salaries_pdf")
+     * @Route("/mois/", name="salaries_liste")
      */
-    public function pdfSalaries()
+    public function listeSalaries(Request $request)
     {
-        $now = new DateTime();
-        $month =  $this->mois[(int) $now->format('n') - 1];
-        $annee = (int) $now->format('Y');
+        if ($request->isMethod('GET') && ($request->query->get('recherche') != null)) {
+            $recherche = new Datetime($request->query->get('recherche'));
+        }else {
+            $recherche = new DateTime('today');
+        }
+    
+        $date = $recherche->format('Y-m');
+        $parts = explode('-', $date);
+        $annee = $parts[0];
+        $month = (int) $parts[1] - 1;
+        $month = $this->mois[$month];
+        $mois = $month . ' ' . $annee;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $salaries = $em->getRepository(Salaires::class)->findBy(['mois' => $mois]);
+
+        return $this->render('salaires/salariesVide.html.twig', [
+            'mois' => $mois,
+            'salaries' => $salaries,
+            'recherche' => $recherche,
+        ]);
+    }
+
+    /**
+     * @Route("/mois/pdf", name="salaries_pdf")
+     */
+    public function pdfSalaries(Request $request)
+    {
+        if ($request->isMethod('GET') && ($request->query->get('recherche') != null)) {
+            $recherche = new Datetime($request->query->get('recherche'));
+        }else {
+            $recherche = new DateTime('today');
+        }
+    
+        $date = $recherche->format('Y-m');
+        $parts = explode('-', $date);
+        $annee = $parts[0];
+        $month = (int) $parts[1] - 1;
+        $month = $this->mois[$month];
         $mois = $month . ' ' . $annee;
 
         $em = $this->getDoctrine()->getManager();
@@ -63,9 +100,11 @@ class SalairesController extends AbstractController
 
         if (empty($salaries)) {
             return $this->render('salaires/salariesVide.html.twig', [
-                'mois' => $mois
+                'mois' => $mois,
+                'salaries' => $salaries,
+                'recherche' => $recherche,
             ]);
-        }
+        }            
 
         $html = $this->renderView('salaires/salariesPDF.html.twig', ['salaries' => $salaries, 'mois' => $mois]);
         $html2pdf = new Html2Pdf('P', 'A4', 'fr');

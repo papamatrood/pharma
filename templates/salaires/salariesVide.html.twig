@@ -2,7 +2,58 @@
 
 {% block body %}
     <div class="containerBackground">
-        <h3>Fiche individuel de salaire vide pour le <strong>mois de: {{ mois }} </strong></h3>
+        <h3>Fiche individuel de salaire pour le <strong>mois de: {{ mois }} </strong></h3>
         <br/>
+        <form class="form-inline" method="GET" action="{{ path('salaries_liste') }}">
+            <input name="recherche" class="form-control" type="month" value="{{ recherche|date("Y-m") }}">
+            <button type="submit" class="btn btn-primary">Recherche</button>
+        </form>
+        <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Liste des salaires</h3>
+            <br/>
+
+                <form class="form-inline float-right" method="GET" action="{{ path('salaries_pdf') }}">
+                    <input name="recherche" class="form-control" type="hidden" value="{{ recherche|date("Y-m") }}">
+                    <button type="submit" class="btn btn-primary">Imprimer la liste</button>
+                </form>
+            <br/>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Matricule </th>
+                        <th>Prénom & Nom </th>
+                        <th>Fonction </th>
+                        <th>catégorie </th>
+                        <th>Sal. Base </th>
+                        <th>Primes </th>
+                        <th>Avantages </th>
+                        <th>Sal. Brut </th>
+                        <th>Sal. Net </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for salaire in salaries %}
+                    <tr>
+                        <td>{{ salaire.employe.matricule }}</td>
+                        <td>{{ salaire.employe.prenom }} {{ salaire.employe.nom }}</td>
+                        <td>{{ salaire.employe.fonction }}</td>
+                        <td>{{ salaire.employe.categorie }}</td>
+                        <td>{{ salaire.salaireBase }} FCFA</td>
+                        <td>{{ salaire.prime }} FCFA</td>
+                        <td>{{ salaire.avantage }} FCFA</td>
+                        <td>{{ salaire.salaireBrut }} FCFA</td>
+                        <td>{{ salaire.salaireNet }} FCFA</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="19">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div/>
 {% endblock %}

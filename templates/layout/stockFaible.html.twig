@@ -1,0 +1,24 @@
+
+{% set stockFaible = app.session.get('stockFaible') %}
+{% set products = app.session.get('products') %}
+{{ dump(stockFaible) }}
+{% if stockFaible == true %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="stockFaible">
+        <h6>Des produits sont en rupture de stock</h6>
+        <ul>
+            {% for produit in products %}
+            <li>
+            {{ produit.designation }} : {{ produit.quantite }}
+            </li>
+            {% endfor %}
+        </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+{% endif %}

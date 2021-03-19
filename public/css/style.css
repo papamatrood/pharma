@@ -56,3 +56,22 @@
     background-color: #fff;
     padding: 3rem;
 }
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+ 
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #FFFFFF;
+}
+ 
+.stockFaible {
+    background-color: #b53838;
+    width: 100%;
+    min-height: 6rem;
+    padding: 2rem;
+}

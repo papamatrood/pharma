@@ -63,6 +63,17 @@ class ProduitsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    public function findStockFaible()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.quantite <= :quantite')
+            ->setParameter('quantite', 10)
+            ->orderBy('p.datePeremptionAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Produits[] Returns an array of Produits objects
     //  */
