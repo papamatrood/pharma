@@ -12,6 +12,7 @@
         </div>
         {% endif %}
     </div>
+    <div class="containerBackground">
     <div class="row">
         <div class="col-md-12">
             <form action="{{ path('add_utilisateur', {id: employe.id}) }}" method="POST" oninput='confirmpassword.setCustomValidity(confirmpassword.value != password.value ? "Les mots de passe ne correspondent pas." : "")'>
@@ -56,6 +57,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Assigner</button>
             </form>
+        </div>
         </div>
     </div>
 {% endblock %}

@@ -90,47 +90,49 @@
                   <li><a class="dropdown-item" href="{{ path('ventes_retour') }}">Retour sur Vente</a></li>
                 </ul>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Personnel
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink04">
-                  <li><a class="dropdown-item" href="{{ path('employes_new') }}">Ajout Employé</a></li>          
-                  <li><a class="dropdown-item" href="{{ path('salaires_new') }}">Créé une Fiche de Salaire</a></li>
-                  <div class="dropdown-divider"></div>
-                  <li><a class="dropdown-item" href="{{ path('employes_pdf') }}">Liste du Personnel</a></li>          
-                  <li><a class="dropdown-item" href="{{ path('salaries_liste') }}">Liste de Paie</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Comptabilité
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink05">
-                  <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Gestion des Règlements</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Règlement Fournisseur</a></li>
-                      <li><a class="dropdown-item" href="#">Règlement Client</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Caisse</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="{{ path('caisse_approvisionnement') }}">Approsivionnement</a></li>
-                      <li><a class="dropdown-item" href="{{ path('caisse_depense') }}">Dépense</a></li>
-                      <li><a class="dropdown-item" href="{{ path('caisse_pdf') }}">Situation</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>    
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Administration
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink02">
-                  <li><a class="dropdown-item" href="{{ path('utilisateurs_index') }}">Créer un Utilisateur</a></li> 
-                  <li><a class="dropdown-item" href="{{ path('privileges') }}">Gestion des Privilèges</a></li>
-                </ul>
-              </li>
+              {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Personnel
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink04">
+                    <li><a class="dropdown-item" href="{{ path('employes_new') }}">Ajout Employé</a></li>          
+                    <li><a class="dropdown-item" href="{{ path('salaires_new') }}">Créé une Fiche de Salaire</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li><a class="dropdown-item" href="{{ path('employes_pdf') }}">Liste du Personnel</a></li>          
+                    <li><a class="dropdown-item" href="{{ path('salaries_liste') }}">Liste de Paie</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Comptabilité
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink05">
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Gestion des Règlements</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Règlement Fournisseur</a></li>
+                        <li><a class="dropdown-item" href="#">Règlement Client</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Caisse</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('caisse_approvisionnement') }}">Approsivionnement</a></li>
+                        <li><a class="dropdown-item" href="{{ path('caisse_depense') }}">Dépense</a></li>
+                        <li><a class="dropdown-item" href="{{ path('caisse_pdf') }}">Situation</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>    
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administration
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink02">
+                    <li><a class="dropdown-item" href="{{ path('utilisateurs_index') }}">Créer un Utilisateur</a></li> 
+                    <li><a class="dropdown-item" href="{{ path('privileges') }}">Gestion des Privilèges</a></li>
+                  </ul>
+                </li>
+              {% endif %} 
             {% endif %} 
           </ul>
         </div>

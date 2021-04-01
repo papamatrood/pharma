@@ -132,6 +132,10 @@ class EmployesController extends AbstractController
             $entityManager->persist($employe);
 
             $entityManager->flush();
+
+            $this->addFlash('success', 'Un rôle a été assigné à l\'utilisateur avec succès !');
+
+            return $this->redirectToRoute('utilisateurs_index');
         }
         return $this->render('employes/assignation.html.twig', ['employe' => $employe, 'errors' => $errors, 'roles' => $roles]);
     }

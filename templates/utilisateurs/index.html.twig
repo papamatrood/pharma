@@ -5,6 +5,12 @@
 {% block body %}
     <div class="containerBackground">
         <h1 class="h3 mb-5 font-weight-normal">Liste des utilisateurs</h1> 
+        <br/><br/>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+        {% endfor %}
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered">

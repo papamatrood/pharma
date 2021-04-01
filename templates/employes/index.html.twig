@@ -3,11 +3,13 @@
 {% block title %}Liste des employés{% endblock %}
 
 {% block body %}
+    <div class="containerBackground">
     <div class="row">
         <div class="col-md-12">
             <h3>Liste des employés</h3>
             <br/>
-            <a class="btn btn-outline-primary float-right" href="{{ path('employes_new') }}">Ajouter un employé</a>
+            <a class="btn btn-success float-left" href="{{ path('employes_new') }}">Ajouter un employé</a>
+            <a class="btn btn-primary float-right" href="{{ path('employes_pdf') }}">Imprimer la liste</a>
             <br/><br/><br/>
             <table class="table table-bordered">
                 <thead class="thead-light">
@@ -15,14 +17,10 @@
                         <th>N°Mat</th>
                         <th>Prénom & Nom</th>
                         <th>Adresse</th>
-                        <th>Nationalite</th>
-                        <th>Civilite</th>
                         <th>Fonction</th>
                         <th>Tél</th>
                         <th>Email</th>
                         <th>Categorie</th>
-                        <th>N°AMO</th>
-                        <th>Type Cont</th>
                         <th>actions</th>
                     </tr>
                 </thead>
@@ -32,14 +30,10 @@
                         <td>{{ employe.matricule }}</td>
                         <td>{{ employe.prenom }} {{ employe.nom }}</td>
                         <td>{{ employe.adresse }}</td>
-                        <td>{{ employe.nationalite }}</td>
-                        <td>{{ employe.civilite }}</td>
                         <td>{{ employe.fonction }}</td>
                         <td>{{ employe.telephone }}</td>
                         <td>{{ employe.email }}</td>
                         <td>{{ employe.categorie }}</td>
-                        <td>{{ employe.numeroAssuranceMaladie }}</td>
-                        <td>{{ employe.typeContrat }}</td>
                         {#<td>{{ employe.dateContratAt ? employe.dateContratAt|date('Y-m-d') : '' }}</td>
                         <td>{{ employe.situationFamiliale }}</td>#}
                         <td>
@@ -59,5 +53,6 @@
                 </tbody>
             </table>
         </div>
+    </div>
     </div>
 {% endblock %}
