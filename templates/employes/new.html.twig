@@ -3,38 +3,126 @@
 {% block title %}Ajouter un employé{% endblock %}
 
 {% block body %}
-    <div class="containerBackground">
-        {{ form_start(form) }}
+    <div class="containerBackground pageNewEmploye">
+
+        <form class="form-inline form-individuel" method="GET" action="{{ path('employes_new') }}" >
             <h3 class="h3 mb-5 font-weight-normal">Ajouter un employé</h3>
             <div class="row">
                 <div class="col-md-4">
-                        {{ form_row(form.matricule) }}
-                        {{ form_row(form.nom) }}
-                        {{ form_row(form.prenom) }}
-                        {{ form_row(form.dateNaissanceAt) }}
-                        {{ form_row(form.lieuNaissance) }}
-                        {{ form_row(form.adresse) }}
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="matricule">Matricule</label>
+                            <input name="matricule" type="text" class="form-control" id="matricule">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="nom"> Nom</label>
+                            <input name="nom" type="text" class="form-control" id="nom">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="prenom">Prénom</label>
+                            <input name="prenom" type="text" class="form-control" id="prenom">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="dateNaissance">Date de naissance</label>
+                            <input name="dateNaissance" type="date" value="1990-01-01" class="form-control" id="dateNaissance">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="lieuNaissance">Lieu de naissance</label>
+                            <input name="lieuNaissance" type="text" class="form-control" id="lieuNaissance">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="adresse">Adresse</label>
+                            <input name="adresse" type="text" class="form-control" id="adresse">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireBase">Salaire de base</label>
+                            <input name="salaireBase" ng-model="salaireBase" type="text" class="form-control" id="salaireBase">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireBrut">Salaire brut</label>
+                            <input name="salaireBrut" type="text" class="form-control" id="salaireBrut">
+                    </div>
                 </div>
                 <div class="col-md-4">
-                        {{ form_row(form.nationalite) }}
-                        {{ form_row(form.civilite) }}
-                        {{ form_row(form.dateEmbaucheAt) }}
-                        {{ form_row(form.fonction) }}
-                        {{ form_row(form.telephone) }}
-                        {{ form_row(form.email) }}
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="nationalite">Nationalité</label>
+                        <input name="nationalite" type="text" class="form-control" id="nationalite">
+                    </div>
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="civilite">Civilite</label>
+                        <select name="civilite" class="form-control" id="civilite">
+                            <option value="Monsieur">Monsieur</option>
+                            <option value="Madame">Madame</option>
+                            <option value="Mademoiselle">Mademoiselle</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="dateEmbauche">Date embauche</label>
+                            <input name="dateEmbauche" type="date" value="{{ 'now'|date("Y-m-d") }}" class="form-control" id="dateEmbauche">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="fonction">Fonction</label>
+                            <input name="fonction" type="text" class="form-control" id="fonction">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="telephone">téléphone</label>
+                            <input name="telephone" type="text" class="form-control" id="telephone">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="email">Email</label>
+                            <input name="email" type="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salairePrimes">Prime</label>
+                            <input name="salairePrimes" ng-model="salairePrimes" type="text" class="form-control" id="salairePrimes">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireNet">Salaire net</label>
+                            <input name="salaireNet" type="text" class="form-control" id="salaireNet">
+                    </div>
                 </div>
                 <div class="col-md-4">
-                        {{ form_row(form.categorie) }}
-                        {{ form_row(form.numeroAssuranceMaladie) }}
-                        {{ form_row(form.typeContrat) }}
-                        {{ form_row(form.dateContratAt) }}
-                        {{ form_row(form.situationFamiliale) }}
-                        {{ form_row(form.nombreEnfant) }}
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="categorie">Categorie</label>
+                        <select name="categorie" class="form-control" id="categorie">
+                            <option value="Vaccataire">Vaccataire</option>
+                            <option value="Permanent">Permanent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="amo">N° AMO</label>
+                            <input name="amo" type="text" class="form-control" id="amo">
+                    </div>
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="typeContrat">Type contrat</label>
+                        <select name="typeContrat" class="form-control" id="typeContrat">
+                            <option value="Stage">Stage</option>
+                            <option value="CDD">CDD</option>
+                            <option value="CDI">CDI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="typeContrat">Date contrat</label>
+                            <input name="dateContrat" type="date" value="{{ 'now'|date("Y-m-d") }}" class="form-control" id="dateContrat">
+                    </div>
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="situationFamiliale">Situation familiale</label>
+                        <select name="situationFamiliale" class="form-control" id="situationFamiliale">
+                            <option value="Marié(e)">Marié(e)</option>
+                            <option value="Célibataire">Célibataire</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="nombreEnfant">Nombre d'enfant(s)</label>
+                            <input name="nombreEnfant" type="text" class="form-control" id="nombreEnfant">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireAvantages">Avantage</label>
+                            <input name="salaireAvantages" ng-model="salaireAvantages" type="text" class="form-control" id="salaireAvantages">
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
-        {{ form_end(form) }}
-
+                <button type="submit" class="btn btn-success mt-3">Valider</button>
+        </form> 
         <br/>
         <a class="btn btn-outline-primary" href="{{ path('employes_index') }}">Retour à la liste</a>
     </div>

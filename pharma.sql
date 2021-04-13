@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 01 avr. 2021 à 11:46
+-- Généré le : mar. 13 avr. 2021 à 16:35
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 8.0.2
 
@@ -139,7 +139,8 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20210209190623', '2021-02-26 16:18:04', 37),
 ('DoctrineMigrations\\Version20210209191352', '2021-02-26 16:18:04', 59),
 ('DoctrineMigrations\\Version20210317091004', '2021-03-17 09:10:17', 69),
-('DoctrineMigrations\\Version20210317095535', '2021-03-17 09:56:00', 44);
+('DoctrineMigrations\\Version20210317095535', '2021-03-17 09:56:00', 44),
+('DoctrineMigrations\\Version20210412094306', '2021-04-12 09:43:32', 81);
 
 -- --------------------------------------------------------
 
@@ -167,18 +168,25 @@ CREATE TABLE `employes` (
   `date_contrat_at` datetime NOT NULL,
   `situation_familiale` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre_enfant` int(11) DEFAULT NULL,
-  `utilisateur_id` int(11) DEFAULT NULL
+  `utilisateur_id` int(11) DEFAULT NULL,
+  `salaire_base` double DEFAULT NULL,
+  `salaire_brut` double DEFAULT NULL,
+  `salaire_net` double DEFAULT NULL,
+  `avantage` double DEFAULT NULL,
+  `prime` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `employes`
 --
 
-INSERT INTO `employes` (`id`, `matricule`, `nom`, `prenom`, `date_naissance_at`, `lieu_naissance`, `adresse`, `nationalite`, `civilite`, `date_embauche_at`, `fonction`, `telephone`, `email`, `categorie`, `numero_assurance_maladie`, `type_contrat`, `date_contrat_at`, `situation_familiale`, `nombre_enfant`, `utilisateur_id`) VALUES
-(1, 'EMP001', 'DIAKITE', 'Yoro', '1990-12-15 00:00:00', 'Bamako', 'Kalaban Coro', 'Malienne', 'Monsieur', '2020-09-24 00:00:00', 'Directeur Commercial', '76201526', 'yoro@gmail.com', 'Permanent', 258, 'CDI', '2020-09-24 00:00:00', 'Marié(e)', 2, NULL),
-(2, 'EMP002', 'Dembélé', 'Mamourou', '1990-01-01 00:00:00', 'Sikasso', 'Bamako Coura', 'Malienne', 'Monsieur', '2019-10-03 00:00:00', 'Vendeur', '78211254', 'mamourou@gmail.com', 'Vaccataire', 2, 'CDD', '2019-10-03 00:00:00', 'Madame', 0, 5),
-(3, 'M001', 'MAMOU', 'Awa', '1984-01-01 00:00:00', 'Bamako', 'LAFIABOUGOU', 'Malienne', 'Mademoiselle', '2020-10-02 00:00:00', 'Secretaire', '45655214', 'awa@gmail.com', 'Permanent', 2, 'CDI', '2020-10-02 00:00:00', 'Madame', 0, NULL),
-(4, 'M002', 'Mama', 'eve', '1990-03-04 00:00:00', 'bangui', 'BAMBARI', 'Centrafricaine', 'Madame', '2020-10-04 00:00:00', 'comptable', '56854785', 'mama@yahoo.fr', 'Vaccataire', 3, 'CDD', '2020-10-04 00:00:00', 'Marié(e)', 1, NULL);
+INSERT INTO `employes` (`id`, `matricule`, `nom`, `prenom`, `date_naissance_at`, `lieu_naissance`, `adresse`, `nationalite`, `civilite`, `date_embauche_at`, `fonction`, `telephone`, `email`, `categorie`, `numero_assurance_maladie`, `type_contrat`, `date_contrat_at`, `situation_familiale`, `nombre_enfant`, `utilisateur_id`, `salaire_base`, `salaire_brut`, `salaire_net`, `avantage`, `prime`) VALUES
+(1, 'EMP001', 'DIAKITE', 'Yoro', '1990-12-15 00:00:00', 'Bamako', 'Kalaban Coro', 'Malienne', 'Monsieur', '2020-09-24 00:00:00', 'Directeur Commercial', '76201526', 'yoro@gmail.com', 'Permanent', 258, 'CDI', '2020-09-24 00:00:00', 'Marié(e)', 2, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'EMP002', 'Dembélé', 'Mamourou', '1990-01-01 00:00:00', 'Sikasso', 'Bamako Coura', 'Malienne', 'Monsieur', '2019-10-03 00:00:00', 'Vendeur', '78211254', 'mamourou@gmail.com', 'Vaccataire', 2, 'CDD', '2019-10-03 00:00:00', 'Madame', 0, 5, NULL, NULL, NULL, NULL, NULL),
+(3, 'M001', 'MAMOU', 'Awa', '1984-01-01 00:00:00', 'Bamako', 'LAFIABOUGOU', 'Malienne', 'Mademoiselle', '2020-10-02 00:00:00', 'Secretaire', '45655214', 'awa@gmail.com', 'Permanent', 2, 'CDI', '2020-10-02 00:00:00', 'Madame', 0, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'M002', 'Mama', 'eve', '1990-03-04 00:00:00', 'bangui', 'BAMBARI', 'Centrafricaine', 'Madame', '2020-10-04 00:00:00', 'comptable', '56854785', 'mama@yahoo.fr', 'Vaccataire', 3, 'CDD', '2020-10-04 00:00:00', 'Marié(e)', 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'M099', 'Tamboura', 'Amadou', '1991-03-09 00:00:00', 'Bamako', 'Bamako Coura', 'Malienne', 'Monsieur', '2020-01-06 00:00:00', 'Vendeur', '75261879', 'tamboura@gmail.com', 'Vaccataire', 2145885, 'CDD', '2020-01-06 00:00:00', 'Célibataire', 0, NULL, 600000, 630000, 598500, 10000, 20000),
+(7, 'M097', 'Tounkara', 'Mariam', '1990-01-01 00:00:00', 'Sikasso', 'Kabala', 'Malienne', 'Monsieur', '2021-02-08 00:00:00', 'Vendeuse', '75261855', 'mariam@gmail.com', 'Permanent', 2145886, 'Stage', '2021-02-08 00:00:00', 'Marié(e)', 2, NULL, 400000, 620000, 589000, 200000, 20000);
 
 -- --------------------------------------------------------
 
@@ -288,14 +296,6 @@ CREATE TABLE `reset_password_request` (
 CREATE TABLE `salaires` (
   `id` int(11) NOT NULL,
   `employe_id` int(11) DEFAULT NULL,
-  `nombre_heure` int(11) DEFAULT NULL,
-  `taux_horaire` double DEFAULT NULL,
-  `salaire_base` int(11) NOT NULL,
-  `prime` int(11) DEFAULT NULL,
-  `avantage` int(11) DEFAULT NULL,
-  `salaire_brut` int(11) NOT NULL,
-  `salaire_net` int(11) NOT NULL,
-  `cotisation_social` int(11) NOT NULL,
   `mois` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -303,13 +303,14 @@ CREATE TABLE `salaires` (
 -- Déchargement des données de la table `salaires`
 --
 
-INSERT INTO `salaires` (`id`, `employe_id`, `nombre_heure`, `taux_horaire`, `salaire_base`, `prime`, `avantage`, `salaire_brut`, `salaire_net`, `cotisation_social`, `mois`) VALUES
-(5, 1, 0, 0, 1500000, 25000, 35000, 1560000, 1482000, 78000, 'Octobre 2020'),
-(6, 2, 240, 2000, 20000, 8000, 1500, 29500, 28025, 1475, 'Octobre 2020'),
-(7, 1, 240, 2000, 500000, 50000, 15000, 565000, 536750, 28250, 'Octobre 2020'),
-(8, 4, 240, 2000, 500000, 1500, 50000, 551500, 523925, 27575, 'Octobre 2020'),
-(9, 2, 240, 2000, 20000, 1500, 1500, 23000, 21850, 1150, 'Décembre 2020'),
-(10, 3, 240, 2000, 1500000, 8, 35000, 1535008, 1458257, 76750, 'Décembre 2020');
+INSERT INTO `salaires` (`id`, `employe_id`, `mois`) VALUES
+(5, 1, 'Octobre 2020'),
+(6, 2, 'Octobre 2020'),
+(7, 1, 'Octobre 2020'),
+(8, 4, 'Octobre 2020'),
+(9, 2, 'Décembre 2020'),
+(10, 3, 'Décembre 2020'),
+(11, 6, 'Avril 2021');
 
 -- --------------------------------------------------------
 
@@ -527,7 +528,7 @@ ALTER TABLE `commandes`
 -- AUTO_INCREMENT pour la table `employes`
 --
 ALTER TABLE `employes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `famille`
@@ -563,7 +564,7 @@ ALTER TABLE `reset_password_request`
 -- AUTO_INCREMENT pour la table `salaires`
 --
 ALTER TABLE `salaires`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `stock`

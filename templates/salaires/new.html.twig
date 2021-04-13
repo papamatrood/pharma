@@ -93,40 +93,26 @@
                 <div class="row">
                         <div class="col-md-4">
                                 <div class="form-group">
-                                        <label  class="mr-sm-2" for="salaireNbreHeure">Nombre heure</label>
-                                        <input name="salaireNbreHeure" type="text" ng-model="salaireNbreHeure" ng-init="salaireNbreHeure='196'" class="form-control form-control-sm" id="salaireNbreHeure" value=" 196 " >
+                                        <label  class="mr-sm-2" for="base">Salaire de base</label>
+                                        <input name="base" type="text" class="form-control form-control-sm" id="base">
                                 </div>
                                 <div class="form-group">
-                                        <label  class="mr-sm-2" for="salaireBase">Salaire de base</label>
-                                        <input name="salaireBase" ng-model="salaireBase" type="text" class="form-control form-control-sm" id="salaireBase">
+                                        <label  class="mr-sm-2" for="avantage">Avantages</label>
+                                        <input name="avantage"type="text" class="form-control form-control-sm" id="avantage">
                                 </div>
                                 <div class="form-group">
-                                        <label  class="mr-sm-2" for="salaireAvantages">Avantages</label>
-                                        <input name="salaireAvantages" ng-model="salaireAvantages" type="text" class="form-control form-control-sm" id="salaireAvantages">
-                                </div>
-                        </div>
-                        <div class="col-md-4">
-                                <div class="form-group">
-                                        <label  class="mr-sm-2" for="salaireTauxHoraire">Taux horaire</label>
-                                        <input name="salaireTauxHoraire" type="text" class="form-control form-control-sm" id="salaireTauxHoraire" value="{{ ('{{((1* salaireBase) / (salaireNbreHeure * 1)) }}') }}">
-                                </div>
-                                <div class="form-group">
-                                        <label  class="mr-sm-2" for="salairePrimes">Primes</label>
-                                        <input name="salairePrimes" ng-model="salairePrimes" type="text" class="form-control form-control-sm" id="salairePrimes">
-                                </div>
-                                <div class="form-group">
-                                        <label  class="mr-sm-2" for="salaireBrut">Salaire brut</label>
-                                        <input name="salaireBrut" type="text" class="form-control form-control-sm" value="{{ '{{1* salaireBase + salaireAvantages * 1 + salairePrimes * 1}}' }}" id="salaireBrut">
+                                        <label  class="mr-sm-2" for="prime">Primes</label>
+                                        <input name="prime" type="text" class="form-control form-control-sm" id="prime">
                                 </div>
                         </div>
                         <div class="col-md-4">
                                 <div class="form-group">
-                                        <label  class="mr-sm-2" for="salaireCotisation">Cotisation sociale (5%)</label>
-                                        <input name="salaireCotisation" type="text" value="{{ '{{((1* salaireBase + salaireAvantages * 1 + salairePrimes * 1) * 5 ) / 100}}' }}" class="form-control form-control-sm" id="salaireCotisation">
+                                        <label  class="mr-sm-2" for="brut">Salaire brut</label>
+                                        <input name="brut" type="text" class="form-control form-control-sm" id="brut">
                                 </div>
                                 <div class="form-group">
-                                        <label  class="mr-sm-2" for="salaireNet">Salaire net</label>
-                                        <input name="salaireNet" type="text" value="{{ '{{(1* salaireBase + salaireAvantages * 1 + salairePrimes * 1) - ((1* salaireBase + salaireAvantages * 1 + salairePrimes * 1) * 5 ) / 100}}' }}" class="form-control form-control-sm" id="salaireNet">
+                                        <label  class="mr-sm-2" for="net">Salaire net</label>
+                                        <input name="net" type="text" class="form-control form-control-sm" id="net">
                                 </div>
                         </div>
                 </div>

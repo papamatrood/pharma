@@ -64,36 +64,24 @@
         
         <table id="entity">
             <tr>
-                <td width="150">Nombre d'heures</td>
-                <td width="250">{{ salaire.nombreHeure }}</td>
-            </tr>
-            <tr>
-                <td width="150">Taux horaires</td>
-                <td width="250">{{ salaire.tauxHoraire }}</td>
-            </tr>
-            <tr>
                 <td width="150">Primes</td>
-                <td width="250">{{ salaire.prime }}</td>
+                <td width="250">{{ salaire.employe.prime }}</td>
             </tr>
             <tr>
                 <td width="150">Avantages</td>
-                <td width="250">{{ salaire.avantage }}</td>
-            </tr>
-            <tr>
-                <td width="150">Cotisation de social</td>
-                <td width="250">{{ salaire.cotisationSocial }}</td>
+                <td width="250">{{ salaire.employe.avantage }}</td>
             </tr>
             <tr>
                 <td width="150">Salaire de base</td>
-                <td width="250">{{ salaire.salaireBase }}</td>
+                <td width="250">{{ salaire.employe.salaireBase }}</td>
             </tr>
             <tr>
                 <td width="150">Salaire brut</td>
-                <td width="250">{{ salaire.salaireBrut }}</td>
+                <td width="250">{{ salaire.employe.salaireBrut }}</td>
             </tr>
             <tr>
                 <td width="150">Salaire net</td>
-                <td width="250">{{ salaire.salaireNet }}</td>
+                <td width="250">{{ salaire.employe.salaireNet }}</td>
             </tr>
         </table>
         <br/>

@@ -120,6 +120,31 @@ class Employes
      */
     private $utilisateur;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $salaireBase;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $salaireBrut;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $salaireNet;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $avantage;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prime;
+
     public function __construct()
     {
         $this->salaires = new ArrayCollection();
@@ -388,6 +413,66 @@ class Employes
     public function setUtilisateur(?Utilisateurs $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getSalaireBase(): ?float
+    {
+        return $this->salaireBase;
+    }
+
+    public function setSalaireBase(?float $salaireBase): self
+    {
+        $this->salaireBase = $salaireBase;
+
+        return $this;
+    }
+
+    public function getSalaireBrut(): ?float
+    {
+        return $this->salaireBrut;
+    }
+
+    public function setSalaireBrut(?float $salaireBrut): self
+    {
+        $this->salaireBrut = $salaireBrut;
+
+        return $this;
+    }
+
+    public function getSalaireNet(): ?float
+    {
+        return $this->salaireNet;
+    }
+
+    public function setSalaireNet(?float $salaireNet): self
+    {
+        $this->salaireNet = $salaireNet;
+
+        return $this;
+    }
+
+    public function getAvantage(): ?float
+    {
+        return $this->avantage;
+    }
+
+    public function setAvantage(?float $avantage): self
+    {
+        $this->avantage = $avantage;
+
+        return $this;
+    }
+
+    public function getPrime(): ?float
+    {
+        return $this->prime;
+    }
+
+    public function setPrime(?float $prime): self
+    {
+        $this->prime = $prime;
 
         return $this;
     }

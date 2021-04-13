@@ -57,6 +57,10 @@
     padding: 3rem;
 }
 
+.pageNewEmploye select.form-control {
+    width: 61%;
+} 
+
 html {
     position: relative;
     min-height: 100%;

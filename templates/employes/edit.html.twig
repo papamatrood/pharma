@@ -1,13 +1,133 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/layout.html.twig' %}
 
-{% block title %}Edit Employes{% endblock %}
+{% block title %}Éditer un employé{% endblock %}
+
+{% block angularJS %} ng-app {% endblock %}
 
 {% block body %}
-    <h1>Edit Employes</h1>
+    <div class="containerBackground pageNewEmploye">
 
-    {{ include('employes/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('employes_index') }}">back to list</a>
-
-    {{ include('employes/_delete_form.html.twig') }}
+        <form class="form-inline form-individuel" method="GET" action="{{ path('employes_edit', {id: employe.id}) }}" >
+            <h3 class="h3 mb-5 font-weight-normal">Éditer un employé</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="matricule">Matricule</label>
+                            <input name="matricule" type="text" class="form-control" value="{{ employe.matricule }}" id="matricule">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="nom"> Nom</label>
+                            <input name="nom" type="text" class="form-control" value="{{ employe.nom }}" id="nom"#>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="prenom">Prénom</label>
+                            <input name="prenom" type="text" class="form-control" value="{{ employe.prenom }}" id="prenom">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="dateNaissance">Date de naissance</label>
+                            <input name="dateNaissance" type="date" value="{{ employe.dateNaissanceAt|date('Y-m-d') }}" class="form-control" id="dateNaissance">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="lieuNaissance">Lieu de naissance</label>
+                            <input name="lieuNaissance" type="text" class="form-control" value="{{ employe.lieuNaissance }}" id="lieuNaissance">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="adresse">Adresse</label>
+                            <input name="adresse" type="text" class="form-control" value="{{ employe.adresse }}" id="adresse">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireBase">Salaire de base</label>
+                            <input name="salaireBase" value="{{ employe.salaireBase }}" type="text" class="form-control" id="salaireBase">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireBrut">Salaire brut</label>
+                            <input name="salaireBrut" type="text" class="form-control" value="{{ employe.salaireBrut }}" id="salaireBrut">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="nationalite">Nationalité</label>
+                        <input name="nationalite" type="text" class="form-control" value="{{ employe.nationalite }}" id="nationalite">
+                    </div>
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="civilite">Civilite</label>
+                        <select name="civilite" class="form-control" id="civilite">
+                        {% for civ in civilites %}
+                            <option {% if (employe.civilite == civ) %} selected {% endif %} value="{{ civ }}">{{ civ }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="dateEmbauche">Date embauche</label>
+                            <input name="dateEmbauche" type="date" value="{{ employe.dateEmbaucheAt|date("Y-m-d") }}" class="form-control" id="dateEmbauche">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="fonction">Fonction</label>
+                            <input name="fonction" type="text" class="form-control" value="{{ employe.fonction }}" id="fonction">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="telephone">téléphone</label>
+                            <input name="telephone" type="text" class="form-control" value="{{ employe.telephone }}" id="telephone">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="email">Email</label>
+                            <input name="email" type="email" class="form-control" value="{{ employe.email }}" id="email">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salairePrimes">Prime</label>
+                            <input name="salairePrimes" type="text" value="{{ employe.prime }}" class="form-control" id="salairePrimes">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireNet">Salaire net</label>
+                            <input name="salaireNet" type="text" class="form-control" value="{{ employe.salaireNet }}" id="salaireNet">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="categorie">Categorie</label>
+                        <select name="categorie" class="form-control" id="categorie">
+                        {% for cat in categories %}
+                            <option {% if (employe.categorie == cat) %} selected {% endif %} value="{{ cat }}">{{ cat }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="amo">N° AMO</label>
+                            <input name="amo" type="text" class="form-control" value="{{ employe.numeroAssuranceMaladie }}" id="amo">
+                    </div>
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="typeContrat">Type contrat</label>
+                        <select name="typeContrat" class="form-control" id="typeContrat">
+                        {% for typ in typeContrats %}
+                            <option {% if (employe.typeContrat == typ) %} selected {% endif %} value="{{ typ }}">{{ typ }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="typeContrat">Date contrat</label>
+                            <input name="dateContrat" type="date" value="{{ employe.dateContratAt|date("Y-m-d") }}" class="form-control" id="dateContrat">
+                    </div>
+                    <div class="form-group">
+                        <label  class="mt-sm-2" for="situationFamiliale">Situation familiale</label>
+                        <select name="situationFamiliale" class="form-control" id="situationFamiliale">
+                        {% for sf in situationFamiliales %}
+                            <option {% if (employe.situationFamiliale == sf) %} selected {% endif %} value="{{ sf }}">{{ sf }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="nombreEnfant">Nombre d'enfant(s)</label>
+                            <input name="nombreEnfant" type="text" class="form-control" value="{{ employe.nombreEnfant }}" id="nombreEnfant">
+                    </div>
+                    <div class="form-group">
+                            <label  class="mt-sm-2" for="salaireAvantages">Avantage</label>
+                            <input name="salaireAvantages" type="text" class="form-control" value="{{ employe.avantage }}" id="salaireAvantages">
+                    </div>
+                </div>
+            </div>
+                <button type="submit" class="btn btn-success mt-3">Valider</button>
+        </form> 
+        <br/>
+        <a class="btn btn-outline-primary" href="{{ path('employes_index') }}">Retour à la liste</a>
+    </div>
 {% endblock %}

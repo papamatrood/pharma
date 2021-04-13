@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class EmployesType extends AbstractType
 {
@@ -74,6 +75,35 @@ class EmployesType extends AbstractType
                 'label' => 'Situation Familiale'
             ])
             ->add('nombreEnfant')
+            ->add('salaireBase', TextType::class, [
+                'label' => 'Salaire de base',
+                'attr' => [
+                    'id'=>'salaireBase',
+                    'ng-model'=>'salaireBase'
+                ]
+            ])
+            ->add('salaireBrut', TextType::class, [
+                'label' => 'Salaire brut',
+                'attr' => ['id'=>'salaireBrut']
+            ])
+            ->add('salaireNet', TextType::class, [
+                'label' => 'Salaire net',
+                'attr' => ['id'=>'salaireNet']
+            ])
+            ->add('prime', TextType::class, [
+                'label' => 'Prime',
+                'attr' => [
+                    'id'=>'salairePrimes',
+                    'ng-model'=>'salairePrimes'
+                ]
+            ])
+            ->add('avantage', TextType::class, [
+                'label' => 'Avantage',
+                'attr' => [
+                    'id'=>'salaireAvantages',
+                    'ng-model'=>'salaireAvantages'
+                ]
+            ])
         ;
     }
 

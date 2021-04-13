@@ -86,6 +86,11 @@ $('document').ready(function () {
                     $('#salaireFonction').val(data.fonction);
                     $('#salaireDateEmbauche').val(data.embauche);
                     $('#salaireSituationFamiliale').val(data.situation);
+                    $('#base').val(data.salaireBase);
+                    $('#brut').val(data.salaireBrut);
+                    $('#net').val(data.salaireNet);
+                    $('#prime').val(data.prime);
+                    $('#avantage').val(data.avantage);
                 })
                 .fail(function () {
                     alert("Erreur de chargement des informations l'employé d'id : " + id);
@@ -181,6 +186,29 @@ $('document').ready(function () {
             setTimeout(function () { myWindow.close(); }, 1000);
         }
     });
+
+
+    // Page d'édition un employé 
+
+    $("#salaireBase").on("keyup paste", function() {
+        $("#salaireNet").val((1 * $(this).val() + 1 * $('#salaireAvantages').val() + 1 * $('#salairePrimes').val()) - (((1 * $(this).val() + 1 * $('#salaireAvantages').val() + 1 * $('#salairePrimes').val()) * 5) / 100));
+        $("#salaireBrut").val((1 * $(this).val() + 1 * $('#salaireAvantages').val() + 1 * $('#salairePrimes').val()));
+    });
+
+    $("#salaireAvantages").on("keyup paste", function() {
+        $("#salaireNet").val((1 * $(this).val() + 1 * $('#salaireBase').val() + 1 * $('#salairePrimes').val()) - (((1 * $(this).val() + 1 * $('#salaireBase').val() + 1 * $('#salairePrimes').val()) * 5) / 100));
+        $("#salaireBrut").val((1 * $(this).val() + 1 * $('#salaireBase').val() + 1 * $('#salairePrimes').val()));
+    });
+
+    $("#salairePrimes").on("keyup paste", function() {
+        $("#salaireNet").val((1 * $(this).val() + 1 * $('#salaireBase').val() + 1 * $('#salaireAvantages').val()) - (((1 * $(this).val() + 1 * $('#salaireBase').val() + 1 * $('#salaireAvantages').val()) * 5) / 100));
+        $("#salaireBrut").val((1 * $(this).val() + 1 * $('#salaireBase').val() + 1 * $('#salaireAvantages').val()));
+    });
+
+
+    // Alert rupture de stock
+
+    $('[data-toggle="popover"]').popover();  
 
 
 

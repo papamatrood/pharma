@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Employes;
 use App\Form\EmployesType;
 use App\Entity\Utilisateurs;
@@ -59,27 +60,149 @@ class EmployesController extends AbstractController
 
     /**
      * @Route("/new", name="employes_new")
-     * @Route("/{id}/edit", name="employes_edit")
      */
-    public function new(Request $request, Employes $employe = null): Response
+    public function new(Request $request): Response
     {
-        if (is_null($employe)) {
-            $employe = new Employes();
-        }
-        $form = $this->createForm(EmployesType::class, $employe);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
+
+        //$form = $this->createForm(EmployesType::class, $employe);
+        //$form->handleRequest($request);
+
+        if ($request->isMethod('GET') && $request->query->get('salaireNet') !=null) {
+            $matricule = $request->query->get('matricule');
+            $prenom = $request->query->get('prenom');
+            $nom = $request->query->get('nom');
+            $dateNaissance = $request->query->get('dateNaissance');
+            $lieuNaissance = $request->query->get('lieuNaissance');
+            $adresse = $request->query->get('adresse');
+            $nationalite = $request->query->get('nationalite');
+            $civilite = $request->query->get('civilite');
+            $dateEmbauche = $request->query->get('dateEmbauche');
+            $fonction = $request->query->get('fonction');
+            $telephone = $request->query->get('telephone');
+            $email = $request->query->get('email');
+            $categorie = $request->query->get('categorie');
+            $amo = $request->query->get('amo');
+            $typeContrat = $request->query->get('typeContrat');
+            $dateContrat = $request->query->get('dateContrat');
+            $situationFamiliale = $request->query->get('situationFamiliale');
+            $nombreEnfant = $request->query->get('nombreEnfant');
+            $base = (int) $request->query->get('salaireBase');
+            $avantages = (int) $request->query->get('salaireAvantages');
+            $primes = (int) $request->query->get('salairePrimes');
+            $brut = (int) $request->query->get('salaireBrut');
+            $net = (int) $request->query->get('salaireNet');
+            
+            $employe = new Employes();
+            $employe->setMatricule($matricule);
+            $employe->setNom($nom);
+            $employe->setPrenom($prenom);
+            $employe->setDateNaissanceAt(new DateTime($dateNaissance));
+            $employe->setLieuNaissance($lieuNaissance);
+            $employe->setAdresse($adresse);
+            $employe->setNationalite($nationalite);
+            $employe->setCivilite($civilite);
+            $employe->setDateEmbaucheAt(new DateTime($dateEmbauche));
+            $employe->setFonction($fonction);
+            $employe->setTelephone($telephone);
+            $employe->setEmail($email);
+            $employe->setCategorie($categorie);
+            $employe->setNumeroAssuranceMaladie($amo);
+            $employe->setDateContratAt(new DateTime($dateContrat));
+            $employe->setSituationFamiliale($situationFamiliale);
+            $employe->setNombreEnfant($nombreEnfant);
+            $employe->setTypeContrat($typeContrat);
+            $employe->setSalaireBase($base);
+            $employe->setPrime($primes);
+            $employe->setAvantage($avantages);
+            $employe->setSalaireBrut($brut);
+            $employe->setSalaireNet($net);
+
             $entityManager->persist($employe);
             $entityManager->flush();
 
             return $this->redirectToRoute('employes_index');
         }
 
-        return $this->render('employes/new.html.twig', [
+        return $this->render('employes/new.html.twig');
+    }
+
+    /**
+     * @Route("/{id}/edit", name="employes_edit")
+     */
+    public function edit(Request $request, Employes $employe): Response
+    {
+        $situationFamiliales = ['Marié(e)', 'Célibataire'];
+        $civilites = ['Monsieur', 'Madame', 'Mademoiselle'];
+        $categories = ['Vaccataire', 'Permanent'];
+        $typeContrats = ['Stage', 'CDD', 'CDI'];
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if ($request->isMethod('GET') && $request->query->get('salaireNet') !=null) {
+            $matricule = $request->query->get('matricule');
+            $prenom = $request->query->get('prenom');
+            $nom = $request->query->get('nom');
+            $dateNaissance = $request->query->get('dateNaissance');
+            $lieuNaissance = $request->query->get('lieuNaissance');
+            $adresse = $request->query->get('adresse');
+            $nationalite = $request->query->get('nationalite');
+            $civilite = $request->query->get('civilite');
+            $dateEmbauche = $request->query->get('dateEmbauche');
+            $fonction = $request->query->get('fonction');
+            $telephone = $request->query->get('telephone');
+            $email = $request->query->get('email');
+            $categorie = $request->query->get('categorie');
+            $amo = $request->query->get('amo');
+            $typeContrat = $request->query->get('typeContrat');
+            $dateContrat = $request->query->get('dateContrat');
+            $situationFamiliale = $request->query->get('situationFamiliale');
+            $nombreEnfant = $request->query->get('nombreEnfant');
+            $base = (int) $request->query->get('salaireBase');
+            $avantages = (int) $request->query->get('salaireAvantages');
+            $primes = (int) $request->query->get('salairePrimes');
+            $brut = (int) $request->query->get('salaireBrut');
+            $net = (int) $request->query->get('salaireNet');
+            
+            $employe = $entityManager->getRepository(Employes::class)->find($employe);
+
+            $employe->setMatricule($matricule);
+            $employe->setNom($nom);
+            $employe->setPrenom($prenom);
+            $employe->setDateNaissanceAt(new DateTime($dateNaissance));
+            $employe->setLieuNaissance($lieuNaissance);
+            $employe->setAdresse($adresse);
+            $employe->setNationalite($nationalite);
+            $employe->setCivilite($civilite);
+            $employe->setDateEmbaucheAt(new DateTime($dateEmbauche));
+            $employe->setFonction($fonction);
+            $employe->setTelephone($telephone);
+            $employe->setEmail($email);
+            $employe->setCategorie($categorie);
+            $employe->setNumeroAssuranceMaladie($amo);
+            $employe->setDateContratAt(new DateTime($dateContrat));
+            $employe->setSituationFamiliale($situationFamiliale);
+            $employe->setNombreEnfant($nombreEnfant);
+            $employe->setTypeContrat($typeContrat);
+            $employe->setSalaireBase($base);
+            $employe->setPrime($primes);
+            $employe->setAvantage($avantages);
+            $employe->setSalaireBrut($brut);
+            $employe->setSalaireNet($net);
+
+            $entityManager->persist($employe);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('employes_index');
+        }
+
+        return $this->render('employes/edit.html.twig', [
             'employe' => $employe,
-            'form' => $form->createView(),
+            'situationFamiliales' => $situationFamiliales,
+            'civilites' => $civilites,
+            'categories' => $categories,
+            'typeContrats' => $typeContrats
         ]);
     }
 
@@ -210,6 +333,11 @@ class EmployesController extends AbstractController
         $fonction = $employe->getFonction();
         $embauche = $employe->getDateEmbaucheAt()->format('d/m/Y');
         $situation = $employe->getSituationFamiliale();
+        $avantage = $employe->getAvantage();
+        $prime = $employe->getPrime();
+        $salaireBase = $employe->getSalaireBase();
+        $salaireBrut = $employe->getSalaireBrut();
+        $salaireNet = $employe->getSalaireNet();
         $response = new JsonResponse();
         return $response->setData([
             'employe' => $nomPrenom,
@@ -221,25 +349,11 @@ class EmployesController extends AbstractController
             'fonction' => $fonction,
             'embauche' => $embauche,
             'situation' => $situation,
-        ]);
-    }
-
-    /**
-     */
-    public function edit(Request $request, Employes $employe): Response
-    {
-        $form = $this->createForm(EmployesType::class, $employe);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('employes_index');
-        }
-
-        return $this->render('employes/edit.html.twig', [
-            'employe' => $employe,
-            'form' => $form->createView(),
+            'avantage' => $avantage,
+            'prime' => $prime,
+            'salaireBase' => $salaireBase,
+            'salaireBrut' => $salaireBrut,
+            'salaireNet' => $salaireNet,
         ]);
     }
 

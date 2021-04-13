@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Liste salarie</title>
+        <title>Liste de salaires</title>
         <link href="./css/salaire.css" rel="stylesheet" type="text/css" />
     </head>
     <body class="employes">
@@ -28,17 +28,17 @@
                 <td class="titre_employe" width="78">Sal. Brut </td>
                 <td class="titre_employe" width="78">Sal. Net </td>
             </tr>
-            {% for salarie in salaries %}
+            {% for salaire in salaries %}
             <tr >
-                <td width="78">{{ salarie.employe.matricule }}</td>
-                <td width="78">{{ salarie.employe.prenom }} {{ salarie.employe.nom }}</td>
-                <td width="78">{{ salarie.employe.fonction }}</td>
-                <td width="78">{{ salarie.employe.categorie }}</td>
-                <td width="78">{{ salarie.salaireBase }} FCFA</td>
-                <td width="75">{{ salarie.prime }} FCFA</td>
-                <td width="78">{{ salarie.avantage }} FCFA</td>
-                <td width="78">{{ salarie.salaireBrut }} FCFA</td>
-                <td width="78">{{ salarie.salaireNet }} FCFA</td>
+                <td width="78">{{ salaire.employe.matricule }}</td>
+                <td width="78">{{ salaire.employe.prenom }} {{ salaire.employe.nom }}</td>
+                <td width="78">{{ salaire.employe.fonction }}</td>
+                <td width="78">{{ salaire.employe.categorie }}</td>
+                <td width="78">{{ salaire.employe.salaireBase }} FCFA</td>
+                <td width="75">{{ salaire.employe.prime }} FCFA</td>
+                <td width="78">{{ salaire.employe.avantage }} FCFA</td>
+                <td width="78">{{ salaire.employe.salaireBrut }} FCFA</td>
+                <td width="78">{{ salaire.employe.salaireNet }} FCFA</td>
             </tr>
             {% else %}
                 <tr>

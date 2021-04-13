@@ -134,28 +134,12 @@ class SalairesController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $employes = $entityManager->getRepository(Employes::class)->findAll();
 
-        if ($request->isMethod('GET') && $request->query->get('salaireNet') !=null) {
+        if ($request->isMethod('GET') && $request->query->get('Matricule') !=null) {
             $idEmploye = $request->query->get('Matricule');
             $employe = $entityManager->getRepository(Employes::class)->find($idEmploye);
-            $nbreHeure = (int) $request->query->get('salaireNbreHeure');
-            $base = (int) $request->query->get('salaireBase');
-            $avantages = (int) $request->query->get('salaireAvantages');
-            $taux = (float) $request->query->get('salaireTauxHoraire');
-            $primes = (int) $request->query->get('salairePrimes');
-            $brut = (int) $request->query->get('salaireBrut');
-            $cotisation = (int) $request->query->get('salaireCotisation');
-            $net = (int) $request->query->get('salaireNet');
             $mois = $month . ' ' . $annee;
             $salaire = new Salaires();
             $salaire->setEmploye($employe);
-            $salaire->setNombreHeure($nbreHeure);
-            $salaire->setTauxHoraire($taux);
-            $salaire->setSalaireBase($base);
-            $salaire->setPrime($primes);
-            $salaire->setAvantage($avantages);
-            $salaire->setSalaireBrut($brut);
-            $salaire->setSalaireNet($net);
-            $salaire->setCotisationSocial($cotisation);
             $salaire->setMois($mois);
 
             $entityManager->persist($salaire);
