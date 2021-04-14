@@ -19,7 +19,11 @@
     </head>
 
     {% set stockFaible = app.session.get('stockFaible') %}
+    {% set productsPerimes = app.session.get('productsPerimes') %}
+    {% set productsEnCoursP = app.session.get('productsEnCoursP') %}
     {% set products = app.session.get('products') %}
+    {% set productsP = app.session.get('productsP') %}
+    {% set productsEnCours = app.session.get('productsEnCours') %}
 
     <body {% block angularJS %}{% endblock %}>
       <nav class="navbar navbar-expand-md navbar-dark bg-success mb-4">
@@ -139,10 +143,19 @@
               {% endif %} 
             {% endif %} 
           </ul>
-          {% if (is_granted('IS_AUTHENTICATED_FULLY') and stockFaible == true) %}
-            <button type="button" class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#ruptureStock">
-              Rupture de stock
-            </button>
+          {% if (is_granted('IS_AUTHENTICATED_FULLY')) %}
+            <div class="ml-auto btn-group">
+              {% if ((productsPerimes == true) or (productsEnCoursP == true)) %}
+              <button type="button" class="btn btn-warning btn-sm float-right" data-toggle="modal" data-target="#perimes">
+                Produits périmés
+              </button>
+              {% endif %} 
+              {% if (stockFaible == true) %}
+                <button type="button" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#ruptureStock">
+                  Rupture de stock
+                </button>
+              {% endif %} 
+            </div>
           {% endif %} 
         </div>
       </nav>
@@ -150,6 +163,7 @@
 
 
       <div class="container">
+
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                     {{ message }}
@@ -158,7 +172,9 @@
 
 
         {% block body %}{% endblock %}
+
       </div>
+
         {% if stockFaible == true %}
           <div class="modal fade" id="ruptureStock" tabindex="-1" role="dialog" aria-labelledby="ruptureStockLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -177,6 +193,47 @@
                       </li>
                       {% endfor %}
                   </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if ((productsPerimes == true) or (productsEnCoursP == true)) %}
+          <div class="modal fade" id="perimes" tabindex="-1" role="dialog" aria-labelledby="perimesLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="perimesLabel">Des produits en cours de péremptions ou périmés</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                {% if (productsPerimes == true) %}
+                <h6>Produits périmés</h6>
+                  <ul>
+                      {% for produit in productsP %}
+                      <li>
+                      <strong>{{ produit.designation }}</strong> est périmé le : {{ produit.datePeremptionAt|date('Y-m-d') }}
+                      </li>
+                      {% endfor %}
+                  </ul>
+                {% endif %}
+                <hr>
+                {% if (productsEnCoursP == true) %}
+                <h6>Produits en cours de péremption</h6>
+                  <ul>
+                      {% for produit in productsEnCours %}
+                      <li>
+                      <strong>{{ produit.designation }}</strong> périmera le : {{ produit.datePeremptionAt|date('Y-m-d') }}
+                      </li>
+                      {% endfor %}
+                  </ul>
+                {% endif %}
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
