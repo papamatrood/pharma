@@ -11,7 +11,7 @@ $('document').ready(function () {
         $('select.codeFamille option:selected').each(function(){
             id += $(this).val();
 
-            $.get('http://localhost:8000/user/familles/' + id, { id: id }, function (data) {
+            $.get('http://127.0.0.1:8000/user/familles/' + id, { id: id }, function (data) {
                 $('.nomFamille').val(data.famille); 
             }, "json");
 
@@ -26,7 +26,7 @@ $('document').ready(function () {
             id += $(this).val();
             numero += $(this).text();
 
-            var jqxhr = $.get('http://localhost:8000/user/fournisseurs/' + id, function () {
+            var jqxhr = $.get('http://127.0.0.1:8000/user/fournisseurs/' + id, function () {
             })
                 .done(function (data) {
                     $('#fournisseur').val(data.fournisseur);
@@ -51,7 +51,7 @@ $('document').ready(function () {
             id += $(this).val();
             code += $(this).text();
 
-            var jqxhr = $.get('http://localhost:8000/user/produits/' + id, function () {
+            var jqxhr = $.get('http://127.0.0.1:8000/user/produits/' + id, function () {
             })
                 .done(function (data) {
                     $('#designation').val(data.designation);
@@ -74,7 +74,7 @@ $('document').ready(function () {
         $('#salaireMatricule option:selected').each(function () {
             id += $(this).val();
 
-            $.get('http://localhost:8000/admin/employes/' + id, function () {
+            $.get('http://127.0.0.1:8000/admin/employes/' + id, function () {
             })
                 .done(function (data) {
                     $('#salairePrenomNom').val(data.employe);
@@ -104,7 +104,7 @@ $('document').ready(function () {
             id += $(this).val();
             numero += $(this).text();
 
-            $.get('http://localhost:8000/user/clients/' + id, function (data) {
+            $.get('http://127.0.0.1:8000/user/clients/' + id, function (data) {
                 $('#numero').val(data.numero);
                 $('#prenomNom').val(data.prenomNom);
                 $('#adresse').val(data.adresse);
@@ -123,7 +123,7 @@ $('document').ready(function () {
         $.get($form.attr('action'), $form.serializeArray())
             .done(function (data) {
                 let $id = $('#codeProd').val();
-                let $href = "http://localhost:8000/admin/commandes/supprimer/" + $id;
+                let $href = "http://127.0.0.1:8000/admin/commandes/supprimer/" + $id;
                 let $a = ('<a class="btn btn-outline-danger suppProduitCommande" href="' + $href + '">' +
                     'Supprimer' +
                     '</a >')
