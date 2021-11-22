@@ -26,7 +26,7 @@ class CommandesController extends AbstractController
     {
         $commandes = $commandesRepository->findAll();
         return $this->render('commandes/index.html.twig', [
-            'commandes' => $commandes,
+            'commandes' => array_reverse($commandes),
         ]);
     }
 

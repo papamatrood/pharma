@@ -39,16 +39,29 @@ class SalairesController extends AbstractController
 
     /**
      * @Route("/", name="salaires")
+     * @Route("/mois/{mois}", name="salaires_mois")
      */
-    public function index(SalairesRepository $salairesRepository)
+    public function index(SalairesRepository $salairesRepository, ?string $mois = null)
     {
+        $lesmois = [];
+        foreach ($this->mois as $month) {
+            $lesmois[] =  $month . ' ' . '2020';
+        }
+
+        $salaires = $salairesRepository->findAll();
+
+        if (!is_null($mois)) {
+            $salaires = $salairesRepository->findByMois($mois);
+        }
+
         return $this->render('salaires/index.html.twig', [
-            'salaires' => $salairesRepository->findAll(),
+            'salaires' => $salaires,
+            'lesmois' => $lesmois
         ]);
     }
 
     /**
-     * @Route("/mois/", name="salaries_pdf")
+     * @Route("/mois-pdf/", name="salaries_pdf")
      */
     public function pdfSalaries()
     {

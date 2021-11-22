@@ -25,7 +25,7 @@ class LivraisonController extends AbstractController
     {
         $livraisons = $commandesRepository->findAll();
         return $this->render('livraison/index.html.twig', [
-            'livraisons' => $livraisons,
+            'livraisons' => array_reverse($livraisons),
         ]);
     }
 

@@ -5,6 +5,7 @@
 {% block title %}Livraison{% endblock %}
 
 {% block body %}
+    <div class="containerBackground">
         <h3 class="font-italic">BON DE LIVRAISON N° <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
         <br/><br/>
         {% for message in app.flashes('success') %}
@@ -144,5 +145,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Livrer</button>
         </form>
+        </div>
 
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block title %}Commande fournisseur{% endblock %}
 
 {% block body %}
+    <div class="containerBackground">
         <h3 class="font-italic">BON DE COMMANDE N° <span class="badge badge-pill badge-success">{{ reference }}</span></h3>
         <br/><br/>
         {% for message in app.flashes('success') %}
@@ -100,5 +101,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Commander</button>
         </form>
+   </div>
 
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block title %}Ajouter un employé{% endblock %}
 
 {% block body %}
+    <div class="containerBackground">
     <div class="jumbotron">
         <h1>Assignation de rôle</h1>      
         <p>Remplisser le formulaire pour assister un rôle à l'employé <strong>{{ employe.prenom }} {{ employe.nom }}</strong></p>
@@ -57,5 +58,6 @@
                 <button type="submit" class="btn btn-primary">Assigner</button>
             </form>
         </div>
+    </div>
     </div>
 {% endblock %}
