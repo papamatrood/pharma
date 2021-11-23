@@ -4,16 +4,26 @@
 
 {% block body %}
     <div class="containerBackground">
-        <h3>Liste des salaires</h3>
-        <br/><br/>
+        <h3 class="text-center">Liste des salaires du mois de : {{ mois }}</h3>
+        <br/>
+        <form class="form-inline" method="get" class="form-control">
+        <label for="anneePaie">Choisissez l'année:</label>
+            <select name="anneePaie" id="anneePaie">
+            {% for anneePaie in anneePaies %}
+                <option value="{{ anneePaie }}">{{ anneePaie }}</option>
+            {% endfor %}
+            </select><br>
+            <button type="submit" class="btn btn-primary">Recherche</button>
+        </form>
+        <br/>
         <div class="row">
             <div class="col-md-3">
                 <ul class="list-group">
                     <li class="list-group-item bg-primary text-light font-weight-bold">Liste des mois</li>
-                    {% for mois in lesmois %}
+                    {% for month in lesmois %}
                         <li class="list-group-item">
-                            <a href="{{ path('salaires_mois', {'mois' : mois}) }}">
-                                <strong>{{ loop.index }}#</strong> - {{ mois }}
+                            <a href="{{ path('salaires_mois', {'mois' : month}) }}">
+                                <strong>{{ loop.index }}#</strong> - {{ month }}
                             </a>
                         </li>
                     {% endfor %}

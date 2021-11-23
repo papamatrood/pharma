@@ -33,7 +33,7 @@
                     <li class="list-group-item bg-primary text-light font-weight-bold">Liste des ventes</li>
                     {% for vente in ventes %}
                         <li class="list-group-item">
-                            <a href="{{ path('ventes_jour_details', {'id': vente.id}) }}">
+                            <a href="{{ path('ventes_jour_details', {'id': vente.id, 'dateVenteAt': vente.dateVenteAt|date("Y-m-d")}) }}">
                                 <strong>{{ loop.index }}#</strong> - Facture (réf:{{ vente.reference }})
                             </a>
                         </li>
@@ -43,6 +43,7 @@
                 </ul>
             </div>
             <div class="col-md-8">
+            {% if venteDetail is defined and venteDetail is not null %}
             <h3>Référence : {{ venteDetail.reference }}</h3>
             <p><strong>Vendeur :</strong> {{ venteDetail.utilisateur.nomUtilisateur }}</p>
             <p><strong>Client :</strong> {{ venteDetail.produits.nomClient }}</p>
@@ -89,6 +90,9 @@
                         </tr>
                     </tfoot>
                 </table>
+                {% else %}
+                <p><strong>Aucun enregistrement trouvé</strong></p>
+                {% endif %}
             </div>
         </div>
     </div>

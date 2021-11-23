@@ -107,12 +107,14 @@ class VentesController extends AbstractController
 
     /**
      * @Route("/ventesDuJour", name="ventes_jour")
-     * @Route("/ventesDuJourDetail/{id}", name="ventes_jour_details")
+     * @Route("/ventesDuJourDetail/{id}/{dateVenteAt}", name="ventes_jour_details")
      */
-    public function ventesJour(VentesRepository $ventesRepository, $id = null, Request $request)
+    public function ventesJour(VentesRepository $ventesRepository, Request $request, $id = null, $dateVenteAt = null)
     {
         if ($request->isMethod('GET') && ($request->query->get('recherche') != null)) {
             $recherche = new Datetime($request->query->get('recherche'));
+        }elseif (!is_null($id) && !is_null($dateVenteAt)) {
+            $recherche = new DateTime($dateVenteAt);
         }else {
             $recherche = new DateTime('today');
         }
@@ -120,6 +122,14 @@ class VentesController extends AbstractController
         $date = $recherche->format('Y-m-d');
 
         $ventes = $ventesRepository->findAllWithDate($date);
+        
+        if (empty($ventes)) {
+            return $this->render('ventes/ventesJour.html.twig', [
+                'ventes' => $ventes,
+                'venteDetail' => null,
+                'recherche' => $recherche
+            ]);
+        }
 
         if (is_null($id)) {
             $id = $ventes[0]->getId();
