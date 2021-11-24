@@ -6,11 +6,13 @@
     <div class="containerBackground">
         <h3 class="text-center">Liste des salaires du mois de : {{ mois }}</h3>
         <br/>
-        <form class="form-inline" method="get" class="form-control">
-        <label for="anneePaie">Choisissez l'année:</label>
-            <select name="anneePaie" id="anneePaie">
-            {% for anneePaie in anneePaies %}
-                <option value="{{ anneePaie }}">{{ anneePaie }}</option>
+        <form class="form-inline" method="get">
+        <label for="anneeSearch">Choisissez l'année : </label>
+            <select name="anneeSearch" id="anneeSearch" class="form-control">
+            {% for anneeSearch in anneePaies %}
+                <option  value="{{ anneeSearch }}" {% if anneeSearch == selected %} selected {% endif %}>
+                    {{ anneeSearch }}
+                </option>
             {% endfor %}
             </select><br>
             <button type="submit" class="btn btn-primary">Recherche</button>

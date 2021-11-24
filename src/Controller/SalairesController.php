@@ -41,8 +41,18 @@ class SalairesController extends AbstractController
      * @Route("/", name="salaires")
      * @Route("/mois/{mois}", name="salaires_mois")
      */
-    public function index(SalairesRepository $salairesRepository, ?string $mois = null)
+    public function index(SalairesRepository $salairesRepository, Request $request, ?string $mois = null)
     {
+        $anneeSearch = (new DateTime())->format('Y');
+        
+        if (!is_null($mois)) {
+            $anneeSearch = explode(' ', $mois)[1];
+        }
+
+        if ($request->isMethod('GET') && ($request->query->get('anneeSearch') != null)) {
+            $anneeSearch = $request->query->get('anneeSearch');
+        }
+        
         $annee = (int) (new DateTime())->format('Y');
         $anneePaies = [];
         for ($i=4; $i >= 0 ; $i--) { 
@@ -51,7 +61,7 @@ class SalairesController extends AbstractController
         
         $lesmois = [];
         foreach ($this->mois as $month) {
-            $lesmois[] =  $month . ' ' . '2020';
+            $lesmois[] =  $month . ' ' . $anneeSearch;
         }
         
         $moisNumber = (int) (new DateTime())->format('m') - 1;
@@ -66,7 +76,8 @@ class SalairesController extends AbstractController
             'salaires' => $salaires,
             'lesmois' => $lesmois,
             'mois' => $mois,
-            'anneePaies' => $anneePaies
+            'anneePaies' => array_reverse($anneePaies),
+            'selected' => $anneeSearch
         ]);
     }
 
