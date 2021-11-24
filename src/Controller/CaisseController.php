@@ -18,12 +18,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CaisseController extends AbstractController
 {
     /**
+     * @Route("/", name="caisse_liste")
+     */
+    public function index(CaisseRepository $caisseRepository): Response
+    {
+        $caisses = $caisseRepository->findAll();
+
+        return $this->render('caisse/index.html.twig', [
+            'caisses' => $caisses
+        ]);
+    }
+
+    /**
      * @Route("/situation/", name="caisse_pdf")
      */
     public function situation(CaisseRepository $caisseRepository): Response
     {
         $caisses = $caisseRepository->findAll();
-        $html = $this->renderView('caisse/caissesPDF.html.twig', ['caisses' => $caisses]);
+        $html = $this->renderView('caisse/caissesPDF.html.twig', ['caisses' => array_reverse($caisses)]);
         $html2pdf = new Html2Pdf('P', 'A4', 'fr');
         $html2pdf->pdf->SetAuthor('DevAndClick');
         $html2pdf->pdf->SetTitle('Caisses ');
