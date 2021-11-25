@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Caisse;
 use App\Form\CaisseType;
 use Spipu\Html2Pdf\Html2Pdf;
 use App\Repository\CaisseRepository;
-use DateTime;
+use App\Repository\VentesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,15 +18,90 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CaisseController extends AbstractController
 {
+    private $mois = [];
+    private $caisseRepo;
+
+    public function __construct(CaisseRepository $caisseRepository)
+    {
+        $this->caisseRepo = $caisseRepository;
+
+        $this->mois = [
+            'Janvier',
+            'Février',
+            'Mars',
+            'Avril',
+            'Mai',
+            'Juin',
+            'Juillet',
+            'Août',
+            'Septembre',
+            'Octobre',
+            'Novembre',
+            'Décembre'
+        ];
+    }
+
+
     /**
      * @Route("/", name="caisse_liste")
+     * @Route("/mois/{mois}", name="caisse_mois")
      */
-    public function index(CaisseRepository $caisseRepository): Response
+    public function index(VentesRepository $ventesRepository, Request $request, ?string $mois = null): Response
     {
-        $caisses = $caisseRepository->findAll();
+        $approvisionnements = [];
+        $approvisionnements['total'] = 0;
+        $caissesApprovisionnement = $this->caisseRepo->findApprovisionnement('Dépôt', 'don');
 
+        foreach ($caissesApprovisionnement as $value ) {
+            $approvisionnements['ligne'][] = [
+                'id' => $value->getId(),
+                'motif' => $value->getMotif(),
+                'montant' => $value->getEntre(),
+                'date' => $value->getDateAt()
+            ];
+            $approvisionnements['total'] += $value->getEntre();
+        }
+        
+        $ventes = $ventesRepository->findAll();
+        
+        foreach ($ventes as $vente ) {
+            $total = 0;
+            foreach ($vente->getProduits()['produits'] as $montant) {
+                $total += $montant['net'];
+            }
+            $approvisionnements['ligne'][] = [
+                'id' => $vente->getId(),
+                'motif' => 'Vente N° : ' . $vente->getReference(),
+                'montant' => $total,
+                'date' => $vente->getDateVenteAt()
+            ];
+            $approvisionnements['total'] += $total;
+        }
+
+        $anneeSearch = (new DateTime())->format('Y');
+        
+        if (!is_null($mois)) {
+            $anneeSearch = explode(' ', $mois)[1];
+        }
+
+        if ($request->isMethod('GET') && ($request->query->get('anneeSearch') != null)) {
+            $anneeSearch = $request->query->get('anneeSearch');
+        }
+        /*
+        $annee = (int) (new DateTime())->format('Y');
+        $anneePaies = [];
+        for ($i=4; $i >= 0 ; $i--) { 
+            $anneePaies[] = $annee - $i;
+        }
+        */
+        
+        $months = [];
+        foreach ($this->mois as $month) {
+            $months[] =  $month . ' ' . $anneeSearch;
+        }
         return $this->render('caisse/index.html.twig', [
-            'caisses' => $caisses
+            'approvisionnements' => $approvisionnements,
+            'months' => $months
         ]);
     }
 

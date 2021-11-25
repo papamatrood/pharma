@@ -28,6 +28,17 @@ class VentesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    
+    public function findByMonth($value)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.dateVenteAt LIKE :value')
+            ->setParameter('value', '%'. $value .'%')
+            ->orderBy('v.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return Ventes[] Returns an array of Ventes objects

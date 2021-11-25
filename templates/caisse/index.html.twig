@@ -5,37 +5,50 @@
 {% block body %}
     <div class="containerBackground">
     <h1>Caisse index</h1>
-
+    <br/>
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group">
+                <li class="list-group-item bg-primary text-light font-weight-bold">Liste des mois</li>
+                {% for month in months %}
+                    <li class="list-group-item">
+                        <a href="{{ path('caisse_mois', {'mois' : month}) }}">
+                            <strong>{{ loop.index }}#</strong> - {{ month }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-9">
     <table class="table">
         <thead>
             <tr>
                 <th>Motif</th>
-                <th>Entre</th>
-                <th>Sortie</th>
-                <th>Solde</th>
-                <th>actions</th>
+                <th>Montant</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
-        {% for caisse in caisses %}
+        {% for caisse in approvisionnements.ligne %}
             <tr>
                 <td>{{ caisse.motif }}</td>
-                <td>{{ caisse.entre|number_format(0, '.', ' ') }}</td>
-                <td>{{ caisse.sortie|number_format(0, '.', ' ') }}</td>
-                <td>{{ caisse.solde|number_format(0, '.', ' ') }}</td>
-                <td>
-                    <a href="{{ path('caisse_show', {'id': caisse.id}) }}">show</a>
-                    <a href="{{ path('caisse_edit', {'id': caisse.id}) }}">edit</a>
-                </td>
+                <td>{{ caisse.montant|number_format(0, '.', ' ') }} FCFA</td>
+                <td>{{ caisse.date|date('Y-m-d') }}</td>
             </tr>
         {% else %}
             <tr>
                 <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
+            <tr>
+                <td><strong>Total : </strong></td>
+                <td colspan="2"><strong>{{ approvisionnements.total|number_format(0, '.', ' ') }} FCFA</strong></td>
+            </tr>
         </tbody>
     </table>
 
     <a href="{{ path('caisse_approvisionnement') }}">Create new</a>
+    </div>
+    </div>
     </div>
 {% endblock %}

@@ -19,6 +19,18 @@ class CaisseRepository extends ServiceEntityRepository
         parent::__construct($registry, Caisse::class);
     }
 
+    public function findApprovisionnement($motif, $date)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.motif LIKE :motif AND c.dateAt LIKE :date')
+            ->setParameter('motif', '%'. $motif .'%')
+            ->setParameter('date', '%'. $date .'%')
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Caisse[] Returns an array of Caisse objects
     //  */
