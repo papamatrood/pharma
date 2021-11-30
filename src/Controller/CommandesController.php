@@ -8,6 +8,7 @@ use App\Entity\Commandes;
 use App\Entity\Fournisseurs;
 use Spipu\Html2Pdf\Html2Pdf;
 use App\Repository\CommandesRepository;
+use App\Services\OrderServices;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +20,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CommandesController extends AbstractController
 {
+    private $orderServices;
+
+    function __construct(OrderServices $orderServices)
+    {
+        $this->orderServices = $orderServices;
+    }
+
     /**
      * @Route("/", name="commandes_index")
      */
@@ -85,40 +93,39 @@ class CommandesController extends AbstractController
         }
         
         if ($request->isMethod('GET') && ($request->query->get('produit') != null)) {
-            $id = (int) $request->query->get('produit');
-            if (array_key_exists($id, $commande)) {
-                if ($request->query->get('quantite') != null) {
-                    $commande['produits'][$id]['quantite'] = (int) $request->query->get('quantite');
-
-                    $this->addFlash('success', 'Quantité modifié avec succès !');
-                }
-            } else {
-                $commande['produits'][$id] = [];
-
-                if ($request->query->get('quantite') != null) {
-                    $commande['produits'][$id]['quantite'] = (int) $request->query->get('quantite');
-                } else {
-
-                    $commande['produits'][$id]['quantite'] = 1;
-
-                    $this->addFlash('success', 'Article ajouté avec succès !');
-                }
-                $commande['produits'][$id]['idProduit'] = (int) $request->query->get('produit');
-                $commande['produits'][$id]['codeProduit'] = $request->query->get('code');
-                $commande['produits'][$id]['designationProduit'] = $request->query->get('designation');
-            }
+            $id          = (int) $request->query->get('produit');
+            $quantite    = (int) $request->query->get('quantite') ?: 1;
+            $code        = $request->query->get('code');
+            $designation = $request->query->get('designation');
+            $this->orderServices->addToOrder($id, $quantite, $code, $designation);
             
-            $session->set('commande', $commande);
-            return $this->redirectToRoute('commandes_new');
-
-        
+            return $this->redirectToRoute('commandes_new');        
         } 
+
         return $this->render('commandes/new.html.twig', [
             'fournisseurs' => $fournisseurs,
             'produits' => $produits,
             'reference' => $reference,
             'commandes' => $commande
         ]);
+    }
+
+    /**
+     * @Route("/increment/{id}", name="produit_commande_increment")
+     */
+    public function increment($id)
+    {
+        $this->orderServices->incrementToOrder($id);            
+        return $this->redirectToRoute('commandes_new'); 
+    }
+
+    /**
+     * @Route("/decrement/{id}", name="produit_commande_decrement")
+     */
+    public function decrement($id)
+    {
+        $this->orderServices->decrementFromOrder($id);            
+        return $this->redirectToRoute('commandes_new'); 
     }
 
     /**
@@ -180,8 +187,12 @@ class CommandesController extends AbstractController
     /**
      * @Route("/supprimer/{id}", name="produit_commande_delete")
      */
-    public function supprimer($id, Request $request)
+    public function supprimer($id)
     {
+        $this->orderServices->deleteAllToOrder($id);            
+        return $this->redirectToRoute('commandes_new');    
+
+        /*
         $session = $request->getSession();
         $commande = $session->get('commande');
         if (array_key_exists($id, $commande['produits'])) {
@@ -193,6 +204,7 @@ class CommandesController extends AbstractController
         return $response->setData([
             'reponse' => 'true'
         ]);
+        */
     }
 
     /**

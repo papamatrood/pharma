@@ -8,7 +8,7 @@
         <br/><br/>
         <div class="alert alert-success" style="display: none;">Suppression effectuée avec succès !</div>
 
-        <form class="commandeFormulaire" method="GET" action="{{ path('commandes_new') }}" >
+        <form class="commandeFormulair" method="GET" action="{{ path('commandes_new') }}" >
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -54,9 +54,13 @@
                         <tr>
                             <td>{{ commande.codeProduit }}</td>
                             <td>{{ commande.designationProduit }}</td>
-                            <td>{{ commande.quantite }}</td>
                             <td>
-                                <a class="btn btn-outline-danger suppProduitCommande" href="{{ path('produit_commande_delete', {'id': commande.idProduit}) }}">
+                                <a href="{{ path('produit_commande_decrement', {'id': commande.idProduit}) }}" class="badge badge-pill badge-secondary p-2 mr-2">-</a>
+                                        {{ commande.quantite }}
+                                <a href="{{ path('produit_commande_increment', {'id': commande.idProduit}) }}" class="badge badge-pill badge-secondary p-2 ml-2">+</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-danger suppProduitCommand" href="{{ path('produit_commande_delete', {'id': commande.idProduit}) }}">
                                         <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
