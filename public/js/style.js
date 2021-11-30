@@ -153,20 +153,22 @@ $('document').ready(function () {
         $that.text('Suppression en cours ...')
         $.get($(this).attr('href'), function () {
         })
-            .done(function () {
-                $that.parent().parent().fadeOut('slow');
+        .done(function () {
+            $that.parent().parent().fadeOut('slow');
 
-                $('.alert-success').show("slow").delay(2000).fadeOut("slow");
-            })
-            .fail(function () {
-                $that.append("<i class=\"far fa-trash-alt\"></i>")
-            })
-            .always(function () {
-                $(function () {
-                    let $tds = document.querySelectorAll('.suppProduitCommande');
-                    alert($tds.length)
-                }).change();
-            });
+            $('.alert-success').show("slow").delay(2000).fadeOut("slow");
+        })
+        .fail(function () {
+            $that.append("<i class=\"far fa-trash-alt\"></i>")
+        })
+        .always(function () {
+            /*
+            $(function () {
+                let $tds = document.querySelectorAll('.suppProduitCommande');
+                alert($tds.length)
+            }).change();
+            */
+        });
     });
 
 

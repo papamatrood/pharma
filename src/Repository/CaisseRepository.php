@@ -19,16 +19,37 @@ class CaisseRepository extends ServiceEntityRepository
         parent::__construct($registry, Caisse::class);
     }
 
-    public function findApprovisionnement($motif, $date)
+    public function findApprovisionnement(array $motifs, string $dateAt)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.motif LIKE :motif AND c.dateAt LIKE :date')
-            ->setParameter('motif', '%'. $motif .'%')
-            ->setParameter('date', '%'. $date .'%')
+            ->andWhere('c.motif IN (:motifs)')
+            ->andWhere('c.dateAt LIKE :dateAt')
+            ->setParameter('motifs', array_values($motifs))
+            ->setParameter('dateAt', '%' .$dateAt . '%')
             ->orderBy('c.id', 'ASC')
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findDepense(array $motifs, string $dateAt)
+    {        
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c
+            FROM App\Entity\Caisse c
+            WHERE c.entre = :entre
+            AND c.dateAt LIKE :dateAt
+            AND c.motif NOT LIKE :motifs
+            ORDER BY c.id DESC'
+        )
+        ->setParameter('entre', 0)
+        ->setParameter('dateAt', '%' . $dateAt . '%')
+        ->setParameter('motifs', '%' . implode(',', $motifs) . '%');
+
+        // returns an array of Product objects
+        return $query->getResult();
     }
 
     // /**

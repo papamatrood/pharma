@@ -8,6 +8,7 @@ use App\Form\CaisseType;
 use Spipu\Html2Pdf\Html2Pdf;
 use App\Repository\CaisseRepository;
 use App\Repository\VentesRepository;
+use App\Repository\CommandesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,11 +47,41 @@ class CaisseController extends AbstractController
      * @Route("/", name="caisse_liste")
      * @Route("/mois/{mois}", name="caisse_mois")
      */
-    public function index(VentesRepository $ventesRepository, Request $request, ?string $mois = null): Response
+    public function index(VentesRepository $ventesRepository, CommandesRepository $livraisonRepository,Request $request, ?string $mois = null): Response
     {
+
+        $anneeSearch = (new DateTime())->format('Y');
+        
+        if (is_null($mois)) {
+            $mois = (new DateTime())->format('m');
+        }else {
+            $anneeSearch = explode('-', $mois)[1];
+            $mois = explode('-', $mois)[2];
+        }
+        $mois = str_pad($mois, 2, '0', STR_PAD_LEFT);
+        
+        if ($request->isMethod('GET') && ($request->query->get('anneeSearch') != null)) {
+            $anneeSearch = $request->query->get('anneeSearch');
+        }
+
+        $date = $anneeSearch . '-' . $mois;
+
+        
+        $annee = (int) (new DateTime())->format('Y');
+        $anneeSituation = [];
+        for ($i=4; $i >= 0 ; $i--) { 
+            $anneeSituation[] = $annee - $i;
+        }
+        
+        
+        $months = [];
+        foreach ($this->mois as $month) {
+            $months[] =  $month . '-' . $anneeSearch;
+        }
+        /* Approvisionnements */
         $approvisionnements = [];
         $approvisionnements['total'] = 0;
-        $caissesApprovisionnement = $this->caisseRepo->findApprovisionnement('Dépôt', 'don');
+        $caissesApprovisionnement = $this->caisseRepo->findApprovisionnement(['Dépôt', 'don'], $date);
 
         foreach ($caissesApprovisionnement as $value ) {
             $approvisionnements['ligne'][] = [
@@ -62,7 +93,7 @@ class CaisseController extends AbstractController
             $approvisionnements['total'] += $value->getEntre();
         }
         
-        $ventes = $ventesRepository->findAll();
+        $ventes = $ventesRepository->findByMonth($date);
         
         foreach ($ventes as $vente ) {
             $total = 0;
@@ -78,30 +109,43 @@ class CaisseController extends AbstractController
             $approvisionnements['total'] += $total;
         }
 
-        $anneeSearch = (new DateTime())->format('Y');
-        
-        if (!is_null($mois)) {
-            $anneeSearch = explode(' ', $mois)[1];
-        }
+        /* Dépense */
+        $depenses = [];
+        $depenses['total'] = 0;
+        $caissesDepenses = $this->caisseRepo->findDepense(['Livraison:'], $date);
 
-        if ($request->isMethod('GET') && ($request->query->get('anneeSearch') != null)) {
-            $anneeSearch = $request->query->get('anneeSearch');
+        foreach ($caissesDepenses as $valueDepense ) {
+            $depenses['ligne'][] = [
+                'id' => $valueDepense->getId(),
+                'motif' => $valueDepense->getMotif(),
+                'montant' => $valueDepense->getSortie(),
+                'date' => $valueDepense->getDateAt()
+            ];
+            $depenses['total'] += $valueDepense->getSortie();
         }
-        /*
-        $annee = (int) (new DateTime())->format('Y');
-        $anneePaies = [];
-        for ($i=4; $i >= 0 ; $i--) { 
-            $anneePaies[] = $annee - $i;
-        }
-        */
         
-        $months = [];
-        foreach ($this->mois as $month) {
-            $months[] =  $month . ' ' . $anneeSearch;
+        $livraisons = $livraisonRepository->findByMonth($date);
+        
+        foreach ($livraisons as $livraison ) {
+            $total = 0;
+            foreach ($livraison->getProduits()['produits'] as $montant) {
+                $total += ($montant['quantite'] * $montant['prix']);
+            }
+            $depenses['ligne'][] = [
+                'id' => $livraison->getId(),
+                'motif' => 'Livraison N° : ' . $livraison->getReference(),
+                'montant' => $total,
+                'date' => $livraison->getDateCommandeAt()
+            ];
+            $depenses['total'] += $total;
         }
+        
         return $this->render('caisse/index.html.twig', [
             'approvisionnements' => $approvisionnements,
-            'months' => $months
+            'depenses' => $depenses,
+            'months' => $months,
+            'anneeSituation' => array_reverse($anneeSituation),
+            'selected' => $anneeSearch
         ]);
     }
 

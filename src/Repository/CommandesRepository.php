@@ -18,6 +18,19 @@ class CommandesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commandes::class);
     }
+    
+    public function findByMonth($date)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.dateCommandeAt LIKE :date')
+            ->andWhere('v.valider = :valider')
+            ->setParameter('date', '%'. $date .'%')
+            ->setParameter('valider', true)
+            ->orderBy('v.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return Commandes[] Returns an array of Commandes objects
